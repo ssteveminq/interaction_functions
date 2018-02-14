@@ -1,0 +1,10 @@
+#goal definition
+bool start
+float32 x_map
+float32 y_map
+---
+#result definition
+bool success
+---
+#feedback
+bool is_possilbe_see

@@ -8,14 +8,17 @@ SET(SOURCES src/gaze_service_node.cpp)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  roslib
   geometry_msgs
   sensor_msgs
-  message_generation
   std_msgs
   std_srvs
   tf
   pcl_ros
   pcl_conversions
+  actionlib
+  actionlib_msgs
+  message_generation
 )
 
 #find_package(Eigen3 REQUIRED)
@@ -27,16 +30,22 @@ if(NOT EIGEN3_FOUND)
 endif()
 
 find_package(PCL 1.7 REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system thread)
 
 add_service_files(
    FILES
    gaze_target.srv
 )
+add_action_files(
+   DIRECTORY action 
+   FILES Gazing.action
+    )
 
 generate_messages(
    DEPENDENCIES
    std_msgs
    std_srvs
+   actionlib_msgs
 )
 
 include_directories(${EIGEN3_INCLUDE_DIR})
@@ -45,24 +54,35 @@ include_directories(src)
 
 catkin_package(
   INCLUDE_DIRS include
-#  LIBRARIES humantracking
-#  CATKIN_DEPENDS roscpp geometry_msgs
-  DEPENDS
-  	roscpp
-  	geometry_msgs
-  	sensor_msgs
-    std_msgs
-  	message_runtime
-    tf
+  CATKIN_DEPENDS 
+  DEPENDS Boost
+  roscpp
+  geometry_msgs
+  sensor_msgs
+  std_msgs
+  message_runtime
+  tf
+  actionlib_msgs
+  actionlib
  )
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${PCL_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-add_executable(gaze_service_test src/gaze_test.cpp ${SOURCES})
+add_executable(gaze_service_test src/gaze_service_test.cpp ${SOURCES})
 target_link_libraries(gaze_service_test ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(gaze_service_test ${catkin_EXPORTED_TARGETS})
+
+add_executable(gaze_action_server src/gaze_action_server.cpp ${SOURCES})
+target_link_libraries(gaze_action_server ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(gaze_action_server ${catkin_EXPORTED_TARGETS})
+
+add_executable(gaze_action_client src/gaze_action_client.cpp ${SOURCES})
+target_link_libraries(gaze_action_client ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(gaze_action_client ${catkin_EXPORTED_TARGETS})
+
