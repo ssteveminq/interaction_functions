@@ -5,6 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 ActivationCallback_	gaze_service/src/gazed_fixing_node.cpp	/^  void ActivationCallback_(const std_msgs::BoolConstPtr& msg) {$/;"	f	class:GazedPointFixing	file:
+BASE_STATE_TOPIC	gaze_service/scripts/gaze_manager_test.py	/^BASE_STATE_TOPIC = "\/hsrb\/omni_base_controller\/state"$/;"	v
 Comparetwopoistions	visual_perception/src/visible_region.cpp	/^bool visible_manager::Comparetwopoistions(std::vector<double> pos,std::vector<double> pos2, double criterion)$/;"	f	class:visible_manager
 ComputeGazeTargetPointHeadAngle_	gaze_service/src/gazed_fixing_node.cpp	/^  bool ComputeGazeTargetPointHeadAngle_(const geometry_msgs::Pose& origin_to_robot,$/;"	f	class:GazedPointFixing	file:
 CoordinateTransform_Global2_staticMap	visual_perception/src/visible_region.cpp	/^int visible_manager::CoordinateTransform_Global2_staticMap(float global_x, float global_y)$/;"	f	class:visible_manager
@@ -12,6 +13,7 @@ FOVW	visual_perception/include/visible_region.h	33;"	d
 Fixing	gaze_service/src/gazed_fixing_node.cpp	/^  void Fixing() {$/;"	f	class:GazedPointFixing
 Gaze_activate_pub	gaze_service/include/gaze_service_node.h	/^	ros::Publisher Gaze_activate_pub;$/;"	m	class:gaze_srv
 Gaze_activate_pub	gaze_service/src/gaze_action_server.cpp	/^  ros::Publisher Gaze_activate_pub;$/;"	m	class:gazeAction	file:
+Gaze_manager	gaze_service/scripts/gaze_manager_test.py	/^class Gaze_manager(object):$/;"	c
 Gaze_point_pub	gaze_service/include/gaze_service_node.h	/^	ros::Publisher Gaze_point_pub;$/;"	m	class:gaze_srv
 Gaze_point_pub	gaze_service/src/gaze_action_server.cpp	/^  ros::Publisher Gaze_point_pub;$/;"	m	class:gazeAction	file:
 GazedPointFixing	gaze_service/src/gazed_fixing_node.cpp	/^  GazedPointFixing() :$/;"	f	class:GazedPointFixing
@@ -20,6 +22,7 @@ Head_Pos	visual_perception/include/visible_region.h	/^  std::vector<double> Head
 IsNotInitilized	visual_perception/src/visible_region.cpp	/^bool IsNotInitilized = true;$/;"	v
 JointStateCallback_	gaze_service/src/gazed_fixing_node.cpp	/^  void JointStateCallback_(const sensor_msgs::JointState& msg) {$/;"	f	class:GazedPointFixing	file:
 LASER_Dist_person	visual_perception/include/visible_region.h	36;"	d
+MARKERS_MAX	gaze_service/scripts/moving_human_marker.py	/^MARKERS_MAX = 100$/;"	v
 MATH_PI	visual_perception/include/visible_region.h	34;"	d
 Publish_nav_target	gaze_service/src/gaze_service_node.cpp	/^void gaze_srv::Publish_nav_target(float _x, float _y, float _theta)$/;"	f	class:gaze_srv
 Run	gaze_service/src/gazed_fixing_node.cpp	/^void Run() {$/;"	f
@@ -27,13 +30,16 @@ Scaled_map	visual_perception/include/visible_region.h	/^  nav_msgs::OccupancyGri
 Scaled_static_map_sub	visual_perception/include/visible_region.h	/^  ros::Subscriber Scaled_static_map_sub;$/;"	m	class:visible_manager
 TargetPointCallback_	gaze_service/src/gazed_fixing_node.cpp	/^  void TargetPointCallback_(const geometry_msgs::PointConstPtr& point) {$/;"	f	class:GazedPointFixing	file:
 Target_Dist_person	visual_perception/include/visible_region.h	35;"	d
+__init__	gaze_service/scripts/gaze_manager_test.py	/^    def __init__(self, wait=0.0):$/;"	m	class:Gaze_manager
 action_name_	gaze_service/src/gaze_action_server.cpp	/^  std::string action_name_;$/;"	m	class:gazeAction	file:
 activation_sub_	gaze_service/src/gazed_fixing_node.cpp	/^  ros::Subscriber activation_sub_;$/;"	m	class:GazedPointFixing	file:
+array_publisher	gaze_service/scripts/moving_human_marker.py	/^array_publisher = rospy.Publisher(topic_array, MarkerArray,queue_size=10)$/;"	v
 as_	gaze_service/src/gaze_action_server.cpp	/^  actionlib::SimpleActionServer<gaze_service::GazingAction> as_;$/;"	m	class:gazeAction	file:
 camera_visible_region	visual_perception/include/visible_region.h	/^  nav_msgs::OccupancyGrid camera_visible_region;$/;"	m	class:visible_manager
 camera_visible_region_pub	visual_perception/include/visible_region.h	/^  ros::Publisher camera_visible_region_pub;$/;"	m	class:visible_manager
 check_cameraregion	visual_perception/src/visible_region.cpp	/^bool visible_manager::check_cameraregion(float x_pos,float y_pos)$/;"	f	class:visible_manager
 check_staticObs	visual_perception/src/visible_region.cpp	/^bool visible_manager::check_staticObs(float x_pos,float y_pos)$/;"	f	class:visible_manager
+count	gaze_service/scripts/moving_human_marker.py	/^count = 0$/;"	v
 cur_yolo_people	visual_perception/include/visible_region.h	/^  std::vector< std::vector< double > > cur_yolo_people;$/;"	m	class:visible_manager
 current_joint_state_	gaze_service/src/gazed_fixing_node.cpp	/^  sensor_msgs::JointState current_joint_state_;$/;"	m	class:GazedPointFixing	file:
 data_count_	gaze_service/src/gaze_action_server.cpp	/^  int data_count_, goal_;$/;"	m	class:gazeAction	file:
@@ -43,6 +49,7 @@ filter_mutex_	visual_perception/include/visible_region.h	/^  boost::mutex filter
 fixed_frame_	visual_perception/include/visible_region.h	/^  std::string fixed_frame_;$/;"	m	class:visible_manager
 gazeAction	gaze_service/src/gaze_action_server.cpp	/^  gazeAction(std::string name): $/;"	f	class:gazeAction
 gazeAction	gaze_service/src/gaze_action_server.cpp	/^class gazeAction$/;"	c	file:
+gaze_manager	gaze_service/scripts/gaze_manager_test.py	/^    gaze_manager = Gaze_manager(float(sys.argv[1]) if len(sys.argv) > 1 else 0.0)$/;"	v	class:Gaze_manager
 gaze_srv	gaze_service/include/gaze_service_node.h	/^class gaze_srv{$/;"	c
 gaze_srv	gaze_service/src/gaze_service_node.cpp	/^gaze_srv::gaze_srv(){$/;"	f	class:gaze_srv
 getCameraregion	visual_perception/src/visible_region.cpp	/^void visible_manager::getCameraregion()$/;"	f	class:visible_manager
@@ -57,6 +64,9 @@ head_kinematics_	gaze_service/src/gazed_fixing_node.cpp	/^  hsr_kinematics::HsrH
 head_trajectory_pub_	gaze_service/src/gazed_fixing_node.cpp	/^  ros::Publisher head_trajectory_pub_;$/;"	m	class:GazedPointFixing	file:
 human_target_pub	visual_perception/include/visible_region.h	/^  ros::Publisher human_target_pub;$/;"	m	class:visible_manager
 human_yolo_callback	visual_perception/src/visible_region.cpp	/^void visible_manager::human_yolo_callback(const visualization_msgs::MarkerArray::ConstPtr& msg)$/;"	f	class:visible_manager
+id	gaze_service/scripts/moving_human_marker.py	/^   id = 0$/;"	v
+int_msg	gaze_service/scripts/moving_human_marker.py	/^   int_msg=std_msgs.msg.Int8()$/;"	v
+intcallback	gaze_service/scripts/gaze_manager_test.py	/^    def intcallback(self, data):$/;"	m	class:Gaze_manager
 is_activating_	gaze_service/src/gazed_fixing_node.cpp	/^  bool is_activating_;$/;"	m	class:GazedPointFixing	file:
 joint_state_sub	visual_perception/include/visible_region.h	/^  ros::Subscriber joint_state_sub;$/;"	m	class:visible_manager
 joint_state_sub_	gaze_service/src/gazed_fixing_node.cpp	/^  ros::Subscriber joint_state_sub_;$/;"	m	class:GazedPointFixing	file:
@@ -65,6 +75,7 @@ kOriginLink	gaze_service/src/gazed_fixing_node.cpp	/^  const char* kOriginLink =
 kRate	gaze_service/src/gazed_fixing_node.cpp	/^  const double kRate = 10.0;$/;"	m	namespace:__anon1	file:
 kRobotBaseLink	gaze_service/src/gazed_fixing_node.cpp	/^  const char* kRobotBaseLink = "base_link";$/;"	m	namespace:__anon1	file:
 listener	gaze_service/include/gaze_service_node.h	/^	tf::TransformListener 	  listener;$/;"	m	class:gaze_srv
+listener	gaze_service/scripts/gaze_manager_test.py	/^    def listener(self,wait=0.0):$/;"	m	class:Gaze_manager
 listener	visual_perception/include/visible_region.h	/^  tf::TransformListener     listener;$/;"	m	class:visible_manager
 listener_	gaze_service/src/gazed_fixing_node.cpp	/^  tf2_ros::TransformListener listener_;$/;"	m	class:GazedPointFixing	file:
 main	gaze_service/src/gaze_action_client.cpp	/^int main (int argc, char **argv)$/;"	f
@@ -72,15 +83,22 @@ main	gaze_service/src/gaze_action_server.cpp	/^int main(int argc, char** argv)$/
 main	gaze_service/src/gaze_service_test.cpp	/^int main(int argc, char **argv)$/;"	f
 main	gaze_service/src/gazed_fixing_node.cpp	/^int main(int argc, char** argv) {$/;"	f
 main	visual_perception/src/visible_region.cpp	/^int main(int argc, char **argv)$/;"	f
+marker	gaze_service/scripts/moving_human_marker.py	/^   marker = Marker()$/;"	v
+marker2	gaze_service/scripts/moving_human_marker.py	/^   marker2 = Marker()$/;"	v
+marker3	gaze_service/scripts/moving_human_marker.py	/^   marker3 = Marker()$/;"	v
+markerArray	gaze_service/scripts/moving_human_marker.py	/^markerArray = MarkerArray()$/;"	v
 mutex_	gaze_service/src/gazed_fixing_node.cpp	/^  mutable boost::mutex mutex_;$/;"	m	class:GazedPointFixing	file:
 nh_	gaze_service/src/gaze_action_server.cpp	/^  ros::NodeHandle nh_;$/;"	m	class:gazeAction	file:
 nh_	visual_perception/include/visible_region.h	/^  ros::NodeHandle nh_;$/;"	m	class:visible_manager
 num_of_detected_human	visual_perception/include/visible_region.h	/^  int num_of_detected_human;$/;"	m	class:visible_manager
 num_particles_tracker	visual_perception/src/visible_region.cpp	/^static const unsigned int num_particles_tracker      = 1000;$/;"	v	file:
+odometryInput	gaze_service/scripts/gaze_manager_test.py	/^    def odometryInput(self, data):$/;"	m	class:Gaze_manager
 origin_to_target_point_	gaze_service/src/gazed_fixing_node.cpp	/^  geometry_msgs::Point origin_to_target_point_;$/;"	m	class:GazedPointFixing	file:
 people_yolo_sub	visual_perception/include/visible_region.h	/^  ros::Subscriber people_yolo_sub;$/;"	m	class:visible_manager
 preemptCB	gaze_service/src/gaze_action_server.cpp	/^  void preemptCB()$/;"	f	class:gazeAction
+pub	gaze_service/scripts/moving_human_marker.py	/^pub = rospy.Publisher('\/Int_cmd_trackhuman', Int8, queue_size=10)$/;"	v
 publish_cameraregion	visual_perception/src/visible_region.cpp	/^void visible_manager::publish_cameraregion()$/;"	f	class:visible_manager
+publisher	gaze_service/scripts/moving_human_marker.py	/^publisher = rospy.Publisher(topic, Marker,queue_size=10)$/;"	v
 result_	gaze_service/src/gaze_action_server.cpp	/^  gaze_service::GazingResult result_;$/;"	m	class:gazeAction	file:
 robot_state_	visual_perception/include/visible_region.h	/^  tf::TransformListener     robot_state_;$/;"	m	class:visible_manager
 scaled_static_map_callback	visual_perception/src/visible_region.cpp	/^void visible_manager::scaled_static_map_callback(const nav_msgs::OccupancyGrid::ConstPtr& msg)$/;"	f	class:visible_manager
@@ -93,11 +111,14 @@ setViewpointTarget	gaze_service/src/gaze_action_server.cpp	/^  void setViewpoint
 setViewpointTarget	gaze_service/src/gaze_service_node.cpp	/^void gaze_srv::setViewpointTarget(const float x_map, float y_map)$/;"	f	class:gaze_srv
 sig_handler	gaze_service/src/gaze_service_test.cpp	/^void sig_handler(int sig)$/;"	f
 spin	visual_perception/src/visible_region.cpp	/^void visible_manager::spin()$/;"	f	class:visible_manager
+state_callback	gaze_service/scripts/gaze_manager_test.py	/^    def state_callback(self,data):$/;"	m	class:Gaze_manager
 sub_	gaze_service/src/gaze_action_server.cpp	/^  ros::Subscriber sub_;$/;"	m	class:gazeAction	file:
 sum_	gaze_service/src/gaze_action_server.cpp	/^  float sum_, sum_sq_;$/;"	m	class:gazeAction	file:
 sum_sq_	gaze_service/src/gaze_action_server.cpp	/^  float sum_, sum_sq_;$/;"	m	class:gazeAction	file:
 target_point_sub_	gaze_service/src/gazed_fixing_node.cpp	/^  ros::Subscriber target_point_sub_;$/;"	m	class:GazedPointFixing	file:
 tf_buffer_	gaze_service/src/gazed_fixing_node.cpp	/^  tf2_ros::Buffer tf_buffer_;$/;"	m	class:GazedPointFixing	file:
+topic	gaze_service/scripts/moving_human_marker.py	/^topic = 'human_target'$/;"	v
+topic_array	gaze_service/scripts/moving_human_marker.py	/^topic_array = 'human_boxes'$/;"	v
 tracker_init_dist	visual_perception/src/visible_region.cpp	/^static const double       tracker_init_dist          = 4.0;$/;"	v	file:
 visible_manager	visual_perception/include/visible_region.h	/^class visible_manager$/;"	c
 visible_manager	visual_perception/src/visible_region.cpp	/^visible_manager::visible_manager(ros::NodeHandle nh)$/;"	f	class:visible_manager

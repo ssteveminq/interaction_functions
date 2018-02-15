@@ -9,6 +9,7 @@ SET(SOURCES src/gaze_service_node.cpp)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   roslib
+  rospy
   geometry_msgs
   sensor_msgs
   std_msgs
@@ -85,4 +86,9 @@ add_dependencies(gaze_action_server ${catkin_EXPORTED_TARGETS})
 add_executable(gaze_action_client src/gaze_action_client.cpp ${SOURCES})
 target_link_libraries(gaze_action_client ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(gaze_action_client ${catkin_EXPORTED_TARGETS})
+
+install(DIRECTORY scripts/
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  USE_SOURCE_PERMISSIONS
+)
 
