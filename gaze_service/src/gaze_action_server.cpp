@@ -17,7 +17,6 @@
 #include <actionlib/server/simple_action_server.h>
 
 
-
 class gazeAction
 {
 public:
@@ -33,7 +32,6 @@ public:
     as_.registerPreemptCallback(boost::bind(&gazeAction::preemptCB, this));
 
     //subscribe to the data topic of interest
-    // sub_ = nh_.subscribe("/random_number", 1, &gazeAction::analysisCB, this);
     as_.start();
   }
 
@@ -51,9 +49,8 @@ public:
   void executeCB(const gaze_service::GazingGoalConstPtr &goal)
   {
 
-    // ros::Rate r(1);
+     // ros::Rate r(1);
      bool success = true;
-
      // ROS_INFO("%s: succeeded",action_name_.c_str());
 
      if (as_.isPreemptRequested() || !ros::ok())
@@ -77,8 +74,6 @@ public:
           as_.setSucceeded(result_);
           ROS_INFO("%s: succeeded",action_name_.c_str());
       }
-
-
   }
 
   void setViewpointTarget(const float x_map, float y_map)
@@ -106,7 +101,6 @@ public:
 	// ros::Duration(0.5).sleep();
 
   }
-
 
 protected:
     

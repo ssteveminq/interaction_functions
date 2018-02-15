@@ -49,7 +49,7 @@ visible_manager::~visible_manager()
 void visible_manager::joint_states_callback(const sensor_msgs::JointState::ConstPtr& msg)
 {
 
-    ROS_INFO("joint states callback");
+    //ROS_INFO("joint states callback");
   Head_Pos[0]=msg->position[9];     //pan
   Head_Pos[1]=msg->position[10];      //tilt
  

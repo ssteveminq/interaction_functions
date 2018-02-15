@@ -34,8 +34,8 @@ bool gaze_srv::seeTarget(gaze_service::gaze_target::Request &req, gaze_service::
 
 	if(req.x_from_map==NULL)
 	{
-		setViewpointTarget(req.x_from_map,req.y_from_map);
-		res.is_possible_see=true;
+		//setViewpointTarget(req.x_from_map,req.y_from_map);
+		res.is_possible_see=false;
 	}
 	else
 	{
@@ -59,16 +59,23 @@ void gaze_srv::setViewpointTarget(const float x_map, float y_map)
 	{
 		GazePoint_msg.x=x_map;
 		GazePoint_msg.y=y_map;
+        GazePoint_msg.z=1.0;
+        Gaze_point_pub.publish(GazePoint_msg);
+
+        std_msgs::Bool activateGaze_msg;
+        activateGaze_msg.data=true;
+
+        Gaze_activate_pub.publish(activateGaze_msg);
 	}
 
-	GazePoint_msg.z=1.0;
-	Gaze_point_pub.publish(GazePoint_msg);
+	//GazePoint_msg.z=1.0;
+	//Gaze_point_pub.publish(GazePoint_msg);
 
-	std_msgs::Bool activateGaze_msg;
-	activateGaze_msg.data=true;
+	//std_msgs::Bool activateGaze_msg;
+	//activateGaze_msg.data=true;
 
-	Gaze_activate_pub.publish(activateGaze_msg);
-	// ros::Duration(0.5).sleep();
+	//Gaze_activate_pub.publish(activateGaze_msg);
+     ros::Duration(1.5).sleep();
 }
 
 
