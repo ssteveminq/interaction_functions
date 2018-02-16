@@ -99,7 +99,6 @@ public:
 
   	Gaze_activate_pub.publish(activateGaze_msg);
 	// ros::Duration(0.5).sleep();
-
   }
 
 protected:
@@ -119,7 +118,6 @@ protected:
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "gazing_action");
-
   gazeAction gazeaction_node(ros::this_node::getName());
   ros::spin();
 

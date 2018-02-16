@@ -31,37 +31,43 @@ class Gaze_manager(object):
     def __init__(self, wait=0.0):
         # initialize action client
         self.cli = actionlib.SimpleActionClient('gazing_action', GazingAction)
-        # actionlib::SimpleActionClient<gaze_service::GazingAction> ac("gazing_action", true);
         self.cli.wait_for_server()
         # publisher for delvering command for base move
         rospy.Subscriber("/gaze_target", Marker, self.gaze_target_callback)
         # rospy.Subscriber("/global_pose",PoseStamped,self.Posecallback)
-        self.goal =GazingGoal(x_map=0,y_map=0)
+        # self.goal =GazingGoal(x_map=0,y_map=0)
+        self.goal =GazingGoal()
 
+    def sendactiongoal(self,desired_x_map, desired_y_map):
+        self.goal.x_map=2.0
+        self.goal.y_map=5.0
+        
+        self.cli.send_goal(self.goal)
+        self.cli.wait_for_result()
     def listener(self,wait=0.0):
-        # make sure the controller is running
+        # make sure the cont0roller is running
+        # r=rospy.Rate(1)
         rospy.spin()            
-
+        # rospy.sleep(0.1)
         # fill ROS message
     def gaze_target_callback(self, data):
         # rospy.loginfo(rospy.get_caller_id()+"I heard %d",data.data)
         print "gaze_callback"
         self.goal.x_map= data.pose.position.x
         self.goal.y_map= data.pose.position.y
-        print self.goal.x_map
-        print self.goal.y_map
-        self.cli.send_goal(self.goal)
-        self.cli.wait_for_result()
-        self.cli.get_result()
-        
+        self.sendactiongoal(self.goal.x_map,self.goal.y_map)
 
+        # print self.goal.x_map
+        # print self.goal.y_map
+        # self.cli.send_goal(self.goal)
+        # self.cli.wait_for_result()
+        # self.cli.get_result()
+        
 if __name__ == '__main__':
-    rospy.init_node('gaze_managing_test')
+    rospy.init_node('gaze_action_client_test')
     gaze_manager = Gaze_manager(float(sys.argv[1]) if len(sys.argv) > 1 else 0.0)
     gaze_manager.listener()
-
-
-
+    # gaze_manager.sendactiongoal()
 
 
 

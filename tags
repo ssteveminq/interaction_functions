@@ -12,6 +12,7 @@ FOVW	visual_perception/include/visible_region.h	33;"	d
 Fixing	gaze_service/src/gazed_fixing_node.cpp	/^  void Fixing() {$/;"	f	class:GazedPointFixing
 Gaze_activate_pub	gaze_service/include/gaze_service_node.h	/^	ros::Publisher Gaze_activate_pub;$/;"	m	class:gaze_srv
 Gaze_activate_pub	gaze_service/src/gaze_action_server.cpp	/^  ros::Publisher Gaze_activate_pub;$/;"	m	class:gazeAction	file:
+Gaze_manager	gaze_service/scripts/gaze_action_client.py	/^class Gaze_manager(object):$/;"	c
 Gaze_manager	gaze_service/scripts/gazeaction_manager_test.py	/^class Gaze_manager(object):$/;"	c
 Gaze_manager	gaze_service/scripts/gazesrv_manager_test.py	/^class Gaze_manager(object):$/;"	c
 Gaze_point_pub	gaze_service/include/gaze_service_node.h	/^	ros::Publisher Gaze_point_pub;$/;"	m	class:gaze_srv
@@ -31,6 +32,7 @@ Scaled_map	visual_perception/include/visible_region.h	/^  nav_msgs::OccupancyGri
 Scaled_static_map_sub	visual_perception/include/visible_region.h	/^  ros::Subscriber Scaled_static_map_sub;$/;"	m	class:visible_manager
 TargetPointCallback_	gaze_service/src/gazed_fixing_node.cpp	/^  void TargetPointCallback_(const geometry_msgs::PointConstPtr& point) {$/;"	f	class:GazedPointFixing	file:
 Target_Dist_person	visual_perception/include/visible_region.h	35;"	d
+__init__	gaze_service/scripts/gaze_action_client.py	/^    def __init__(self, wait=0.0):$/;"	m	class:Gaze_manager
 __init__	gaze_service/scripts/gazeaction_manager_test.py	/^    def __init__(self, wait=0.0):$/;"	m	class:Gaze_manager
 __init__	gaze_service/scripts/gazesrv_manager_test.py	/^    def __init__(self, wait=0.0):$/;"	m	class:Gaze_manager
 action_name_	gaze_service/src/gaze_action_server.cpp	/^  std::string action_name_;$/;"	m	class:gazeAction	file:
@@ -52,10 +54,12 @@ filter_mutex_	visual_perception/include/visible_region.h	/^  boost::mutex filter
 fixed_frame_	visual_perception/include/visible_region.h	/^  std::string fixed_frame_;$/;"	m	class:visible_manager
 gazeAction	gaze_service/src/gaze_action_server.cpp	/^  gazeAction(std::string name): $/;"	f	class:gazeAction
 gazeAction	gaze_service/src/gaze_action_server.cpp	/^class gazeAction$/;"	c	file:
+gaze_manager	gaze_service/scripts/gaze_action_client.py	/^    gaze_manager = Gaze_manager(float(sys.argv[1]) if len(sys.argv) > 1 else 0.0)$/;"	v
 gaze_manager	gaze_service/scripts/gazeaction_manager_test.py	/^    gaze_manager = Gaze_manager(float(sys.argv[1]) if len(sys.argv) > 1 else 0.0)$/;"	v
 gaze_manager	gaze_service/scripts/gazesrv_manager_test.py	/^    gaze_manager = Gaze_manager(float(sys.argv[1]) if len(sys.argv) > 1 else 0.0)$/;"	v
 gaze_srv	gaze_service/include/gaze_service_node.h	/^class gaze_srv{$/;"	c
 gaze_srv	gaze_service/src/gaze_service_node.cpp	/^gaze_srv::gaze_srv(){$/;"	f	class:gaze_srv
+gaze_target_callback	gaze_service/scripts/gaze_action_client.py	/^    def gaze_target_callback(self, data):$/;"	m	class:Gaze_manager
 gaze_target_callback	gaze_service/scripts/gazeaction_manager_test.py	/^    def gaze_target_callback(self, data):$/;"	m	class:Gaze_manager
 gaze_target_callback	gaze_service/scripts/gazesrv_manager_test.py	/^    def gaze_target_callback(self, data):$/;"	m	class:Gaze_manager
 getCameraregion	visual_perception/src/visible_region.cpp	/^void visible_manager::getCameraregion()$/;"	f	class:visible_manager
@@ -80,6 +84,7 @@ kOriginLink	gaze_service/src/gazed_fixing_node.cpp	/^  const char* kOriginLink =
 kRate	gaze_service/src/gazed_fixing_node.cpp	/^  const double kRate = 10.0;$/;"	m	namespace:__anon1	file:
 kRobotBaseLink	gaze_service/src/gazed_fixing_node.cpp	/^  const char* kRobotBaseLink = "base_link";$/;"	m	namespace:__anon1	file:
 listener	gaze_service/include/gaze_service_node.h	/^	tf::TransformListener 	  listener;$/;"	m	class:gaze_srv
+listener	gaze_service/scripts/gaze_action_client.py	/^    def listener(self,wait=0.0):$/;"	m	class:Gaze_manager
 listener	gaze_service/scripts/gazeaction_manager_test.py	/^    def listener(self,wait=0.0):$/;"	m	class:Gaze_manager
 listener	gaze_service/scripts/gazesrv_manager_test.py	/^    def listener(self,wait=0.0):$/;"	m	class:Gaze_manager
 listener	visual_perception/include/visible_region.h	/^  tf::TransformListener     listener;$/;"	m	class:visible_manager
@@ -112,6 +117,7 @@ result_	gaze_service/src/gaze_action_server.cpp	/^  gaze_service::GazingResult r
 robot_state_	visual_perception/include/visible_region.h	/^  tf::TransformListener     robot_state_;$/;"	m	class:visible_manager
 scaled_static_map_callback	visual_perception/src/visible_region.cpp	/^void visible_manager::scaled_static_map_callback(const nav_msgs::OccupancyGrid::ConstPtr& msg)$/;"	f	class:visible_manager
 seeTarget	gaze_service/src/gaze_service_node.cpp	/^bool gaze_srv::seeTarget(gaze_service::gaze_target::Request &req, gaze_service::gaze_target::Response &res)$/;"	f	class:gaze_srv
+sendactiongoal	gaze_service/scripts/gaze_action_client.py	/^    def sendactiongoal(self,desired_x_map, desired_y_map):$/;"	m	class:Gaze_manager
 sequencer_delay	visual_perception/src/visible_region.cpp	/^static const double       sequencer_delay            = 0.5; \/\/TODO: this is probably too big, it was 0.8$/;"	v	file:
 sequencer_internal_buffer	visual_perception/src/visible_region.cpp	/^static const unsigned int sequencer_internal_buffer  = 100;$/;"	v	file:
 sequencer_subscribe_buffer	visual_perception/src/visible_region.cpp	/^static const unsigned int sequencer_subscribe_buffer = 10;$/;"	v	file:

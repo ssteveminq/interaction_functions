@@ -31,7 +31,7 @@ int main (int argc, char **argv)
   ROS_INFO("Action server started, sending goal.");
   // send a goal to the action
   gaze_service::GazingGoal goal;
-  goal.x_map = 10;
+  goal.x_map = -10;
   goal.x_map = 3;
   ac.sendGoal(goal);
 
