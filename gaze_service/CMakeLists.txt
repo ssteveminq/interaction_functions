@@ -87,6 +87,10 @@ add_executable(gaze_action_client src/gaze_action_client.cpp ${SOURCES})
 target_link_libraries(gaze_action_client ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(gaze_action_client ${catkin_EXPORTED_TARGETS})
 
+add_executable(clicked_gaze_test src/clicked_gaze_test.cpp ${SOURCES})
+target_link_libraries(clicked_gaze_test ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(clicked_gaze_test ${catkin_EXPORTED_TARGETS})
+
 install(DIRECTORY scripts/
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   USE_SOURCE_PERMISSIONS
