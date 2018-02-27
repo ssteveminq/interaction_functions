@@ -44,8 +44,8 @@ while not rospy.is_shutdown():
    marker.id=0
 
    #moving human
-   marker.pose.position.x =0.2+0.005*count+1.5*math.cos(count/300.0)
-   marker.pose.position.y = -2.3+0.002*count+0.5*math.sin(count/300.0)
+   marker.pose.position.x =4.2+0.005*count+1.5*math.cos(count/300.0)
+   marker.pose.position.y = 4.3+0.002*count+0.5*math.sin(count/300.0)
    marker.pose.position.z = 1
 
    # marker.pose.position.y = 2.7+0.2*math.sin(count/100.0)
