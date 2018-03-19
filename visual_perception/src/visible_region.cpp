@@ -21,6 +21,8 @@ visible_manager::visible_manager(ros::NodeHandle nh)
 {
   // initialize
   camera_visible_region_pub=nh_.advertise<nav_msgs::OccupancyGrid>("/camera_region_map", 10, true);
+
+  
   joint_state_sub =nh_.subscribe<sensor_msgs::JointState>("/hsrb/joint_states", 10, &visible_manager::joint_states_callback,this);
   people_yolo_sub=nh_.subscribe<visualization_msgs::MarkerArray>("/human_boxes", 10, &visible_manager::human_yolo_callback,this);
   globalpose_sub=nh_.subscribe<geometry_msgs::PoseStamped>("/global_pose",10,&visible_manager::global_pose_callback,this);
