@@ -91,6 +91,11 @@ add_executable(clicked_gaze_test src/clicked_gaze_test.cpp ${SOURCES})
 target_link_libraries(clicked_gaze_test ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(clicked_gaze_test ${catkin_EXPORTED_TARGETS})
 
+add_executable(closest_human_gaze src/closest_human_gaze.cpp ${SOURCES})
+target_link_libraries(closest_human_gaze ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(closest_human_gaze ${catkin_EXPORTED_TARGETS})
+
+
 install(DIRECTORY scripts/
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   USE_SOURCE_PERMISSIONS
