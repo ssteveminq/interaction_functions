@@ -96,6 +96,10 @@ target_link_libraries(closest_human_gaze ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(closest_human_gaze ${catkin_EXPORTED_TARGETS})
 
 
+add_executable(person_tracking src/person_tracking_gaze.cpp ${SOURCES})
+target_link_libraries(person_tracking ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(person_tracking ${catkin_EXPORTED_TARGETS})
+
 install(DIRECTORY scripts/
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   USE_SOURCE_PERMISSIONS
