@@ -57,9 +57,7 @@ public:
   {
 
       ROS_INFO("x : %.3lf , y : %.3lf", _x,_y);
-    
-
-       //setViewpointTarget(leg_target);
+      //setViewpointTarget(leg_target);
       //setNavTarget_pub.publish(Navmsgs);
       //ROS_INFO("navgation published");
 
@@ -82,8 +80,7 @@ void globalpose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg){
 
 void target_callback(const visualization_msgs::Marker::ConstPtr& msg){
 
-   target_pose.resize(3);
-
+   target_pose.resize(2);
 
    target_pose[0]=msg->pose.position.x;
    target_pose[1]=msg->pose.position.y;
@@ -147,7 +144,6 @@ void openpose_Callback(const geometry_msgs::PoseArray::ConstPtr& msg)
 
 void publish_gaze_for_target()
 {
-
         double x_map=target_pose[0];
         double y_map=target_pose[1];
 
@@ -157,7 +153,8 @@ void publish_gaze_for_target()
 
         printf("Receive point %.3lf , %.3lf \n",x_map,y_map);
 
-        m_client.call(gaze_srv);
+        if((x_map!=0.0) && (y_map !=0.0))
+            m_client.call(gaze_srv);
 
 }
 
@@ -184,7 +181,7 @@ int main(int argc, char **argv)
   manager.m_client = n.serviceClient<gaze_service::gaze_target>("/gaze_see_target");
   ros::Rate loop_rate(5);
 
-  double ros_rate = 0.25;
+  double ros_rate = 2.0;
   ros::Rate r(ros_rate);
 
   while (ros::ok())

@@ -75,7 +75,7 @@ void gaze_srv::setViewpointTarget(const float x_map, float y_map)
 	//activateGaze_msg.data=true;
 
 	//Gaze_activate_pub.publish(activateGaze_msg);
-     ros::Duration(1.5).sleep();
+     ros::Duration(1.0).sleep();
 }
 
 
