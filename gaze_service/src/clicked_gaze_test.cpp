@@ -48,7 +48,6 @@ public:
 
       ROS_INFO("x : %.3lf , y : %.3lf", _x,_y);
     
-
        //setViewpointTarget(leg_target);
       //setNavTarget_pub.publish(Navmsgs);
       //ROS_INFO("navgation published");

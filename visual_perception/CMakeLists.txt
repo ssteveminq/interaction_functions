@@ -23,12 +23,17 @@ find_package(catkin REQUIRED COMPONENTS
   control_msgs
   actionlib
   visualization_msgs
+  pcl_ros
+  pcl_conversions
+  rviz_tools_py
+  ar_track_alvar_msgs
+  openpose_ros_wrapper_msgs
 )
 
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS thread)
-
+find_package(PCL 1.7 REQUIRED)
 
 generate_messages(
    DEPENDENCIES
@@ -50,6 +55,7 @@ CATKIN_DEPENDS
     nav_msgs
     actionlib_msgs
     visualization_msgs
+    ar_track_alvar_msgs
 LIBRARIES visual_perception
 )
 
@@ -67,6 +73,7 @@ add_library(visual_perception
 ## Declare a cpp executable
 add_executable(visible_manager src/visible_region.cpp)
 add_executable(people_marker src/people_marker.cpp)
+add_executable(particle_artrack src/particle_artrack.cpp)
 
 
 
@@ -74,10 +81,13 @@ add_executable(people_marker src/people_marker.cpp)
 add_dependencies(visible_manager visual_perception ${catkin_EXPORTED_TARGETS})
 add_dependencies(people_marker ${catkin_EXPORTED_TARGETS})
 
+add_dependencies(particle_artrack ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(visible_manager visual_perception ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${BFL_LIBRARIES})
 target_link_libraries(people_marker ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${BFL_LIBRARIES})
+target_link_libraries(particle_artrack ${catkin_LIBRARIES} ${Boost_LIBRARIES}
+                                        ${BFL_LIBRARIES} ${PCL_LIBRARIES})
 
 
 install(TARGETS ${PROJECT_NAME}
@@ -100,3 +110,4 @@ install(DIRECTORY include/${PROJECT_NAME}/
 install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
+
