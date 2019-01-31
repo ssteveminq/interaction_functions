@@ -45,7 +45,7 @@ int main(int argc, char **argv)
   ros::ServiceServer service = n.advertiseService("/gaze_see_target",  &gaze_srv::seeTarget,&gaze_srvice_manager);
   
   signal(SIGINT, sig_handler);
-  double ros_rate = 3.0;
+  double ros_rate = 0.6;
   ros::Rate r(ros_rate);
 
   while (ros::ok())

@@ -1,0 +1,6 @@
+<launch>
+   <node name="gaze_fixing_node" pkg="manipulation_tutorials" type="gazed_point_fixing_node" respawn="false" output="screen"/>
+   <node name="gaze_service_node" pkg="gaze_service" type="gaze_service_test" respawn="false" />
+   <node name="closest_human_gaze_node" pkg="gaze_service" type="closest_human_gaze" respawn="false" output="screen" />
+
+</launch>
