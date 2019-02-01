@@ -64,6 +64,7 @@ private:
     ros::Publisher  particle_person_pub;
     ros::Publisher  face_person_pub;
     ros::Publisher  point_pub;
+    ros::Publisher  imagepoint_pub;
     ros::Publisher  people_pose_pub;
     ros::Subscriber people_boxes_sub;
     ros::Subscriber op_people_sub;

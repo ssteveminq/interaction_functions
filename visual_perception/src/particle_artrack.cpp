@@ -22,6 +22,7 @@ Particle_person::Particle_person() :
     //face_person_pub=n.advertise<geometry_msgs::PointStamped>("/face_person", 10, true);
     //point_pub=n.advertise<geometry_msgs::PointStamped>("/point_3d_sensoframe", 10, true);
     point_pub=n.advertise<geometry_msgs::PointStamped>("/point_3d", 10, true);
+    imagepoint_pub=n.advertise<geometry_msgs::PointStamped>("/imagepoint", 10, true);
     people_pose_pub=n.advertise<geometry_msgs::PoseArray>("/openpose_pose_array", 10, true);
     global_pos_sub= n.subscribe<geometry_msgs::PoseStamped>("/global_pose", 10,&Particle_person::global_pose_callback, this);
     joint_states_sub= n.subscribe<sensor_msgs::JointState>("/hsrb/joint_states", 10,&Particle_person::joint_states_callback, this);
@@ -61,7 +62,7 @@ void Particle_person::point_3d__to_image()
 
     //Camera Intrinsic Matrix
     //K=[535.9208352116473, 0.0, 315.9266712543807, 0.0, 536.4641682047819, 237.7446444724739, 0.0, 0.0, 1.0]
-    ROS_INFO("image coordinates - u: %.3lf , v: %.3lf, d: %.3lf",u,v,d);
+    //ROS_INFO("image coordinates - u: %.3lf , v: %.3lf, d: %.3lf",u,v,d);
     point_pub.publish(output_point);
 
 }
@@ -77,7 +78,10 @@ void Particle_person::cloud_callback(const sensor_msgs::PointCloud2 &msg)
 
 void Particle_person::ar_pose_callback(const ar_track_alvar_msgs::AlvarMarkers::ConstPtr& msg)
 {
-    ROS_INFO("ar_marker_callback");
+    //ROS_INFO("ar_marker_callback");
+    if(msg->markers.size()<1)
+        return;
+     
     geometry_msgs::PoseStamped input_pose=msg->markers[0].pose;
     geometry_msgs::PointStamped input_point;
     input_point.point.x=input_pose.pose.position.x;
@@ -87,6 +91,7 @@ void Particle_person::ar_pose_callback(const ar_track_alvar_msgs::AlvarMarkers::
 
     //visualize()
     geometry_msgs::PointStamped output_point;
+    listener.waitForTransform("map", "head_rgbd_sensor_rgb_frame", ros::Time(0), ros::Duration(10.0));
     listener.transformPoint("head_rgbd_sensor_rgb_frame", input_point, output_point);
     output_point.header.frame_id = "head_rgbd_sensor_rgb_frame";
 
@@ -95,14 +100,24 @@ void Particle_person::ar_pose_callback(const ar_track_alvar_msgs::AlvarMarkers::
     double x_0=315.92;
     double y_0=237.7446;
     
+    ROS_INFO("point x: %.3lf, y: %.3lf, z: %.3lf",output_point.point.x,output_point.point.y, output_point.point.z);
+    if(output_point.point.x==NULL)
+        return;
+
+    //K=[535.9208352116473, 0.0, 315.9266712543807, 0.0, 536.4641682047819, 237.7446444724739, 0.0, 0.0, 1.0]
+    
+    point_pub.publish(output_point);
+
     double u = f_x*output_point.point.x+x_0*output_point.point.z;
     double v = f_x*output_point.point.y+x_0*output_point.point.z;
     double d = output_point.point.z;
 
-    //Camera Intrinsic Matrix
-    //K=[535.9208352116473, 0.0, 315.9266712543807, 0.0, 536.4641682047819, 237.7446444724739, 0.0, 0.0, 1.0]
     ROS_INFO("image coordinates - u: %.3lf , v: %.3lf, d: %.3lf",u,v,d);
-    point_pub.publish(output_point);
+    geometry_msgs::PointStamped image_point;
+    image_point.point.x=u;
+    image_point.point.y=v;
+    image_point.point.z=d;
+    imagepoint_pub.publish(image_point);
 
 }
 
@@ -223,7 +238,7 @@ void Particle_person::joint_states_callback(const sensor_msgs::JointState::Const
     else
         IsHeadMoving=false;
     
-    point_3d__to_image();
+    //point_3d__to_image();
 
 
 }
