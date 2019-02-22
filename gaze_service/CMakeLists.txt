@@ -40,12 +40,14 @@ add_service_files(
 add_action_files(
    DIRECTORY action 
    FILES Gazing.action
+   FindPerson.action
     )
 
 generate_messages(
    DEPENDENCIES
    std_msgs
    std_srvs
+   geometry_msgs
    actionlib_msgs
 )
 
@@ -64,6 +66,7 @@ catkin_package(
   message_runtime
   tf
   actionlib_msgs
+  geometry_msgs
   actionlib
  )
 
@@ -98,6 +101,11 @@ add_dependencies(ar_gaze_test ${catkin_EXPORTED_TARGETS})
 add_executable(closest_human_gaze src/closest_human_gaze.cpp ${SOURCES})
 target_link_libraries(closest_human_gaze ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(closest_human_gaze ${catkin_EXPORTED_TARGETS})
+
+add_executable(find_people_server src/find_people_server.cpp ${SOURCES})
+target_link_libraries(find_people_server ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(find_people_server ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencpp)
+
 
 
 add_executable(person_tracking src/person_tracking_gaze.cpp ${SOURCES})

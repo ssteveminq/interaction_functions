@@ -156,7 +156,6 @@ bool visible_manager::getlinevalue(int line_type,double input_x, double input_y)
     isspecial=4;  
   }
 
-
    // std::cout<<"camera region section : "<<isspecial<<std::endl;
   
   double m=0.0;

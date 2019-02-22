@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+   <!--<arg name="machine" default="" />-->
+   <!--<arg name="use_machine" default="false" />-->
+
+   <!--<machine name="backpack" address="$(env ROBOT_NAME)-backpack.local" user="backpack" default="never" env-loader="/opt/villa_tools/internal/robot/backpack_env_loader.sh" />-->
+
+   <!--<node if="$(arg use_machine)" machine="$(arg machine)" name="openpose_server_node" pkg="openpose_wrapper" type="openpose_server_node" output="screen"/>-->
+   <!--<node unless="$(arg use_machine)" name="openpose_server_node" pkg="openpose_wrapper" type="openpose_server_node" output="screen"/>-->
+   <!--<node name="openpose_human_node" pkg="human_tracker" type="human_tracker_node" respawn="false" output="screen"/>-->
+   <!--<node name="people_pose_publisher" pkg="visual_perception" type="people_marker" respawn="false" output="screen"/>-->
+   <node name="head_control_node" pkg="gaze_service" type="head_joint_control" respawn="false" output="screen"/>
+   <node name="findperson_action" pkg="gaze_service" type="find_people_server" respawn="false" output="screen"/>
+</launch>
