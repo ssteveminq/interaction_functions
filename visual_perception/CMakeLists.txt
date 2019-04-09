@@ -30,12 +30,20 @@ find_package(catkin REQUIRED COMPONENTS
   openpose_ros_wrapper_msgs
   octomap_ros
   octomap_msgs
+  actionlib_msgs
+  actionlib
 )
 
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS thread)
 find_package(PCL 1.7 REQUIRED)
+
+add_action_files(
+  DIRECTORY action
+  FILES
+  Search.action
+)
 
 generate_messages(
    DEPENDENCIES
@@ -44,6 +52,7 @@ generate_messages(
    std_srvs
    actionlib_msgs
 )
+
 
 
 ## Declare things to be passed to dependent projects
@@ -59,6 +68,7 @@ CATKIN_DEPENDS
     visualization_msgs
     ar_track_alvar_msgs
     octomap_msgs 
+    message_runtime
 LIBRARIES visual_perception
 )
 
@@ -66,6 +76,8 @@ LIBRARIES visual_perception
 include_directories(
   include ${catkin_INCLUDE_DIRS}
 )
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 ## Declare a cpp library
 add_library(visual_perception 
@@ -78,7 +90,7 @@ add_executable(visible_manager src/visible_region.cpp)
 add_executable(people_marker src/people_marker.cpp)
 add_executable(particle_artrack src/particle_artrack.cpp)
 add_executable(octomap_checker src/octomap_checker.cpp)
-
+add_executable(human_belief src/human_belief.cpp)
 
 
 ## Add cmake target dependencies of the executable/library
@@ -87,6 +99,7 @@ add_dependencies(people_marker ${catkin_EXPORTED_TARGETS})
 
 add_dependencies(particle_artrack ${catkin_EXPORTED_TARGETS})
 add_dependencies(octomap_checker ${catkin_EXPORTED_TARGETS})
+add_dependencies(human_belief ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(visible_manager visual_perception ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${BFL_LIBRARIES})
@@ -96,6 +109,8 @@ target_link_libraries(particle_artrack ${catkin_LIBRARIES} ${Boost_LIBRARIES}
 
 target_link_libraries(octomap_checker ${catkin_LIBRARIES} ${Boost_LIBRARIES}
                                         ${BFL_LIBRARIES} ${PCL_LIBRARIES})
+
+target_link_libraries(human_belief ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${BFL_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
