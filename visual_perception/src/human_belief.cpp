@@ -93,6 +93,16 @@ void belief_manager::joint_states_callback(const sensor_msgs::JointState::ConstP
 
 }
 
+
+void belief_manager::Extract_frontier()
+{
+
+    //std::vector<Frontier> frontier_list;
+
+
+
+}
+
 void belief_manager::publish_cameraregion()
 {
 

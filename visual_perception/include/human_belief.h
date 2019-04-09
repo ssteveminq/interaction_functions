@@ -93,6 +93,7 @@ public:
   void spin();
 
   void executeCB(const visual_perception::SearchGoalConstPtr &goal);
+  void Extract_frontier();
 
 private:
 
