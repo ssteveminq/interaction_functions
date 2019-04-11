@@ -32,6 +32,7 @@ find_package(catkin REQUIRED COMPONENTS
   octomap_msgs
   actionlib_msgs
   actionlib
+  frontier_exploration
 )
 
 
@@ -69,6 +70,7 @@ CATKIN_DEPENDS
     ar_track_alvar_msgs
     octomap_msgs 
     message_runtime
+    frontier_exploration
 LIBRARIES visual_perception
 )
 
