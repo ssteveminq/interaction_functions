@@ -22,7 +22,7 @@ bool IsNotInitilized = true;
 belief_manager::belief_manager(std::string name)
   :as_(nh_, name, boost::bind(&belief_manager::executeCB, this,_1), false),
    action_name_(name),costmap_(NULL),min_frontier_size_(1),potential_scale_(1e-3), gain_scale_(1.0),blacklist_radius_(0.2),map_res(0.5),
-   robot_state_()
+   robot_state_(), isTargetDetected(false), isActionActive(false)
 {
   // initialize
    
@@ -84,11 +84,14 @@ belief_manager::belief_manager(std::string name)
   belief_pub=nh_.advertise<nav_msgs::OccupancyGrid>("/human_belief_map", 10, true);
   searchmap_pub=nh_.advertise<nav_msgs::OccupancyGrid>("/target_search_map", 10, true);
   frontier_marker_pub = nh_.advertise<visualization_msgs::MarkerArray>("frontier_list_search", 5);
+  frontier_cloud_pub = nh_.advertise<sensor_msgs::PointCloud2>("frontiers",5);
+  nextfrontier_pose_pub= nh_.advertise<geometry_msgs::PoseStamped>("next_frontier",5);
 
   joint_state_sub =nh_.subscribe<sensor_msgs::JointState>("/hsrb/joint_states", 10, &belief_manager::joint_states_callback,this);
   target_poses_sub =nh_.subscribe<geometry_msgs::PoseArray>("/bottle_poses", 10, &belief_manager::target_poses_callback,this);
   globalpose_sub=nh_.subscribe<geometry_msgs::PoseStamped>("/global_pose",10,&belief_manager::global_pose_callback,this);
- 
+
+  as_.start();
 }
 
 // destructor
@@ -100,6 +103,35 @@ belief_manager::~belief_manager()
   // delete all trackers
 };
 
+void belief_manager::reset_search_map()
+{
+
+    if(costmap_ !=NULL)
+        delete []costmap_;
+
+  isTargetDetected=false;
+  double offset_origin = -7.5;
+  Target_Search_map.info.width=30;
+  Target_Search_map.info.height= 30;
+  Target_Search_map.info.resolution=0.5;
+  Target_Search_map.info.origin.position.x=offset_origin;
+  Target_Search_map.info.origin.position.y=offset_origin;
+  Target_Search_map.data.resize(Target_Search_map.info.width*Target_Search_map.info.height);
+  unsigned int search_size=Target_Search_map.info.width*Target_Search_map.info.height;
+  for(int k(0);k<search_size;k++)
+      Target_Search_map.data[k]=-1.0;
+
+  //Initialize costmap variable
+  last_markers_count_=0;
+  costmap_size_x=Target_Search_map.info.width;
+  costmap_size_y=Target_Search_map.info.height;
+  map_res = Target_Search_map.info.resolution;
+  costmap_ = new unsigned char[search_size];
+  memset(costmap_,NO_INFORMATION, search_size * sizeof(unsigned char));
+  ROS_INFO("search_costmap_reset");
+
+}
+
 
 void belief_manager::joint_states_callback(const sensor_msgs::JointState::ConstPtr& msg)
 {
@@ -108,15 +140,6 @@ void belief_manager::joint_states_callback(const sensor_msgs::JointState::ConstP
   Head_Pos[1]=msg->position[10];      //tilt
 }
 
-
-void belief_manager::Extract_frontier()
-{
-
-    //std::vector<Frontier> frontier_list;
-
-
-
-}
 
 void belief_manager::publish_cameraregion()
 {
@@ -535,6 +558,7 @@ void belief_manager::global_pose_callback(const geometry_msgs::PoseStamped::Cons
 void belief_manager::target_poses_callback(const geometry_msgs::PoseArray::ConstPtr& msg)
 {
 
+    isTargetDetected=true;
     //ROS_INFO("taget poses callback---");
 
     num_of_detected_target=msg->poses.size();
@@ -710,23 +734,7 @@ unsigned char* belief_manager::getCharMap() const
 
 std::vector<frontier_exploration::Frontier> belief_manager::searchFrom(geometry_msgs::Point position)
 {
-
     std::vector<frontier_exploration::Frontier> frontier_list;
-
-    //unsigned int mx,my;
-    //if (!costmap_.worldToMap(position.x,position.y,mx,my)){
-        //ROS_ERROR("Robot out of costmap bounds, cannot search for frontiers");
-        //return frontier_list;
-    //}
-    //make sure map is consistent and locked for duration of search
-    //boost::unique_lock < costmap_2d::Costmap2D::mutex_t > lock(*(costmap_.getMutex()));
-
-
-    //Get current occupancy grid
-    //map_ = costmap_.getCharMap();
-    //size_x_ = costmap_.getSizeInCellsX();
-    //size_y_ = costmap_.getSizeInCellsY();
-
 
     unsigned int target_mapidx=(unsigned int) CoordinateTransform_Global2_beliefMap(global_pose[0], global_pose[1]);
     unsigned int search_size =Target_Search_map.info.width*Target_Search_map.info.height;
@@ -738,7 +746,7 @@ std::vector<frontier_exploration::Frontier> belief_manager::searchFrom(geometry_
     std::queue<unsigned int> bfs;
 
     unsigned int clear, pos = target_mapidx;
-    if(nearestCell(clear, pos, FREE_SPACE)){
+    if(nearestCell(clear, pos, NO_INFORMATION)){
         bfs.push(clear);
     }else{
         bfs.push(pos);
@@ -805,7 +813,6 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
     //initialize frontier structure
     frontier_exploration::Frontier output;
     //geometry_msgs::Point centroid, middle;
-    
 
     output.centroid.x = 0;
     output.centroid.y = 0;
@@ -822,12 +829,6 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
     //push initial gridcell onto queue
     std::queue<unsigned int> bfs;
     bfs.push(initial_cell);
-
-    //cache reference position in world coords
-    //unsigned int rx,ry;
-    //double reference_x, reference_y;
-    //costmap_.indexToCells(reference,rx,ry);
-    //costmap_.mapToWorld(rx,ry,reference_x,reference_y);
 
     std::vector<double> temp_referencepose(2,0.0);
     Mapidx2GlobalCoord(reference_,temp_referencepose);
@@ -846,7 +847,7 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
                 //mark cell as frontier
                 frontier_flag[nbr] = true;
                 std::vector<double> temp_position(2,0.0);
-                Mapidx2GlobalCoord(nbr,temp_referencepose);
+                Mapidx2GlobalCoord(nbr,temp_position);
                 double wx = temp_position[0];
                 double wy = temp_position[1];
                 //unsigned int mx,my;
@@ -883,10 +884,10 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
     output.centroid.x /= output.size;
     output.centroid.y /= output.size;
     
-    output.centroid.x+=-0.3;
-    output.centroid.y+=-0.3;
+    output.centroid.x+=0.25;
+    output.centroid.y+=0.25;
 
-    output.travel_point = output.middle;
+    //output.travel_point = output.centroid;
 
     //if(travel_point_ == "closest"){
          //point already set
@@ -900,6 +901,61 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
     //}
 
     return output;
+}
+void belief_manager::getNextFrontiers(const std::vector<frontier_exploration::Frontier>& frontiers)
+{
+
+    frontier_exploration::Frontier selected;
+    selected.min_distance = std::numeric_limits<double>::infinity();
+
+    //pointcloud for visualization purposes
+    pcl::PointCloud<pcl::PointXYZI> frontier_cloud_viz;
+    pcl::PointXYZI frontier_point_viz(50);
+    int max_;
+
+    BOOST_FOREACH(frontier_exploration::Frontier frontier, frontiers){
+        //load frontier into visualization poitncloud
+        frontier_point_viz.x = frontier.travel_point.x;
+        frontier_point_viz.y = frontier.travel_point.y;
+        frontier_cloud_viz.push_back(frontier_point_viz);
+
+        //ROS_INFO("list travel points:  %.3lf, %.3lf", frontier.travel_point.x, frontier.travel_point.y);
+        //ROS_INFO("min_distance : %.3lf", frontier.min_distance);
+        //check if this frontier is the nearest to robot
+        if (frontier.min_distance < selected.min_distance){
+            selected = frontier;
+            max_= frontier_cloud_viz.size()-1;
+            }
+        }
+        //ROS_INFO("max: %d", max);
+        //ROS_INFO("list travel points - %.3lf, %.3lf", frontier.travel_point.x, frontier,travel_point.y);
+
+        if (std::isinf(selected.min_distance)) {
+            ROS_INFO("No valid (non-blacklisted) frontiers found, exploration complete");
+            ROS_DEBUG("No valid (non-blacklisted) frontiers found, exploration complete");
+    }
+
+   //color selected frontier
+   frontier_cloud_viz[max_].intensity = 100;
+
+   //publish visualization point cloud-----------------------------
+   sensor_msgs::PointCloud2 frontier_viz_output;
+   pcl::toROSMsg(frontier_cloud_viz,frontier_viz_output);
+   frontier_viz_output.header.frame_id = "map";
+   frontier_viz_output.header.stamp = ros::Time::now();
+   frontier_cloud_pub.publish(frontier_viz_output);
+   //---------------------------------------------------------------
+
+   //set goal pose to next frontier
+   geometry_msgs::PoseStamped next_frontier;
+   next_frontier.header.frame_id = "map";
+   next_frontier.header.stamp = ros::Time::now();
+
+   next_frontier.pose.position = selected.travel_point;
+   //next_frontier.pose.orientation = tf::createQuaternionMsgFromYaw( yawOfVector(start_pose.pose.position, next_frontier.pose.position) );
+   nextfrontier_pose_pub.publish(next_frontier);
+
+
 }
 
 void belief_manager::visualizeFrontiers(const std::vector<frontier_exploration::Frontier>& frontiers)
@@ -961,7 +1017,7 @@ void belief_manager::visualizeFrontiers(const std::vector<frontier_exploration::
             ++id;
             m.type = visualization_msgs::Marker::SPHERE;
             m.id = int(id);
-            m.pose.position = frontier.initial;
+            m.pose.position = frontier.travel_point;
             // scale frontier according to its cost (costier frontiers will be smaller)
             double scale = std::min(std::abs(min_cost * 0.4 / frontier.cost), 0.5);
             m.scale.x = scale;
@@ -1177,11 +1233,14 @@ bool belief_manager::Comparetwopoistions(std::vector<double> pos,std::vector<dou
   return false;
 }
 
-  void belief_manager::executeCB(const visual_perception::SearchGoalConstPtr &goal)
+void belief_manager::executeCB(const visual_perception::SearchGoalConstPtr &goal)
   {
-     // ros::Rate r(1);
-     //result_.is_free = false;
-     bool success = true;
+      double ros_rate = 2;
+      ros::Rate r(ros_rate);
+
+      isActionActive=true;
+      reset_search_map();
+      bool success = true;
      // ROS_INFO("%s: succeeded",action_name_.c_str());
      if (as_.isPreemptRequested() || !ros::ok())
       {
@@ -1192,28 +1251,41 @@ bool belief_manager::Comparetwopoistions(std::vector<double> pos,std::vector<dou
         // break;
       }
 
-     //bool isObstacle=false;
-     //geometry_msgs::PointStamped point_in;
-     //geometry_msgs::PointStamped point_out;
-     //if(goal->pose.header.frame_id!="map")
-     //{
-        //change reference frame if it is not map frame
-        //ROS_INFO("goal target reference frame : %s", goal->pose.header.frame_id.c_str());
-        //listener.waitForTransform("map",goal->pose.header.frame_id, ros::Time(0), ros::Duration(3.0));
-        //goal->pose.header.frame_id = "map";
-        //listener.transformPoint("map", goal->pose, point_out);
-        //isObstacle=check_obstacle(point_out.point.x, point_out.point.y);
-     //}
-     //else
-     //{
-        //check obstacle information w.r.t map frame
-        //ROS_INFO("map is goal target reference frame ");
-        //isObstacle=check_obstacle(goal->pose.point.x, goal->pose.point.y);
-     //}
+     while(ros::ok() && isActionActive&& !as_.isPreemptRequested())
+     {
+        //process_target(navtarget_pose[0],navtarget_pose[1],navtarget_pose[2]);
+        //Sending_velcmd();
+        //
+        boost::mutex::scoped_lock lock(filter_mutex_);
+        geometry_msgs::Point start_pose;
+        start_pose.x=global_pose[0];
+        start_pose.y=global_pose[1];
 
-     //ROS_INFO("is obstacle? %d",isObstacle );
-     //result_.is_free = isObstacle;
-     as_.setSucceeded(result_);
+        auto frontier_list = searchFrom(start_pose);
+
+        if(frontier_list.size() == 0){
+            ROS_INFO("No frontiers found, exploration complete");
+            isActionActive=false;
+            result_.success = true;
+            as_.setSucceeded(result_);
+            return;
+        }
+        else
+        {
+            ROS_INFO("number of frontiers found: %d", frontier_list.size());
+            visualizeFrontiers(frontier_list);
+            getNextFrontiers(frontier_list);
+        }
+
+        //searchfrom
+        lock.unlock();
+
+        as_.publishFeedback(feedback_);
+    	ros::spinOnce();
+        r.sleep();
+     }
+
+     //as_.setSucceeded(result_);
 }
 
 
@@ -1230,14 +1302,37 @@ void belief_manager::spin()
     publish_target_belief();
     publish_searchmap();
 
+    if(!isTargetDetected)
+        update_human_occ_belief(NO_HUMANS_DETECTED);
 
     // ------ LOCKED ------
+    /*
     boost::mutex::scoped_lock lock(filter_mutex_);
-    
+    geometry_msgs::Point start_pose;
+    start_pose.x=global_pose[0];
+    start_pose.y=global_pose[1];
+
+
+    if(isActionActive){
+        auto frontier_list = searchFrom(start_pose);
+
+        if(frontier_list.size() == 0){
+            ROS_INFO("No frontiers found, exploration complete");
+            
+        }
+        else
+        {
+            ROS_INFO("number of frontiers found: %d", frontier_list.size());
+
+            visualizeFrontiers(frontier_list);
+            getNextFrontiers(frontier_list);
+        }
+    }
+
     //searchfrom
     lock.unlock();
+    */
     // ------ LOCKED ------
-
     // sleep
     ros::Duration(0.5).sleep();
 

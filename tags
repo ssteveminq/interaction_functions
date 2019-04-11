@@ -1,0 +1,562 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ActivationCallback_	gaze_service/src/gazed_fixing_node.cpp	/^  void ActivationCallback_(const std_msgs::BoolConstPtr& msg) {$/;"	f	class:GazedPointFixing	file:
+BASE_LINK	visual_perception/include/octomap_checker.h	41;"	d
+BASE_LINK	visual_perception/include/particle_artrack.h	36;"	d
+BASE_LINK	visual_perception/include/people_marker.h	31;"	d
+CAMERA_PIXEL_HEIGHT	visual_perception/include/octomap_checker.h	44;"	d
+CAMERA_PIXEL_HEIGHT	visual_perception/include/particle_artrack.h	39;"	d
+CAMERA_PIXEL_WIDTH	visual_perception/include/octomap_checker.h	43;"	d
+CAMERA_PIXEL_WIDTH	visual_perception/include/particle_artrack.h	38;"	d
+ClikedpointCallback	gaze_service/src/clicked_gaze_test.cpp	/^  void ClikedpointCallback(const geometry_msgs::PointStamped::ConstPtr& msg)$/;"	f	class:click_gaze_manager
+Comparetwopoistions	visual_perception/src/human_belief.cpp	/^bool belief_manager::Comparetwopoistions(std::vector<double> pos,std::vector<double> pos2, double criterion)$/;"	f	class:belief_manager
+Comparetwopoistions	visual_perception/src/visible_region.cpp	/^bool visible_manager::Comparetwopoistions(std::vector<double> pos,std::vector<double> pos2, double criterion)$/;"	f	class:visible_manager
+Comparetwoposes	gaze_service/src/getheadangle_server.cpp	/^bool Comparetwoposes(std::vector<double> pos,std::vector<double> pos2, double criterion)$/;"	f	class:HeadAngle_Manager
+ComputeGazeTargetPointHeadAngle_	gaze_service/src/gazed_fixing_node.cpp	/^  bool ComputeGazeTargetPointHeadAngle_(const geometry_msgs::Pose& origin_to_robot,$/;"	f	class:GazedPointFixing	file:
+CoordinateTransform_Global2_beliefMap	visual_perception/src/human_belief.cpp	/^int belief_manager::CoordinateTransform_Global2_beliefMap(double global_x, double global_y)$/;"	f	class:belief_manager
+CoordinateTransform_Global2_staticMap	visual_perception/src/human_belief.cpp	/^int belief_manager::CoordinateTransform_Global2_staticMap(float global_x, float global_y)$/;"	f	class:belief_manager
+CoordinateTransform_Global2_staticMap	visual_perception/src/visible_region.cpp	/^int visible_manager::CoordinateTransform_Global2_staticMap(float global_x, float global_y)$/;"	f	class:visible_manager
+Cur_leg_human	gaze_service/src/getheadangle_server.cpp	/^  std::vector< std::vector< double > > Cur_leg_human;$/;"	m	class:HeadAngle_Manager	file:
+DISTANCE_THRESHOLD	gaze_service/src/check_people_server.cpp	20;"	d	file:
+DISTANCE_THRESHOLD	gaze_service/src/find_people_server.cpp	20;"	d	file:
+Desired_joint_pub	gaze_service/src/getheadangle_server.cpp	/^  ros::Publisher Desired_joint_pub; $/;"	m	class:HeadAngle_Manager	file:
+FOVW	visual_perception/include/human_belief.h	45;"	d
+FOVW	visual_perception/include/visible_region.h	33;"	d
+FREE_SPACE	visual_perception/src/human_belief.cpp	/^static const unsigned char  FREE_SPACE = 0;$/;"	v	file:
+FindNearesetIdx	gaze_service/src/closest_human_gaze.cpp	/^int FindNearesetIdx(const geometry_msgs::PoseArray pose_array)$/;"	f	class:closest_human_manager
+FindNearesetIdx	gaze_service/src/person_tracking_gaze.cpp	/^int FindNearesetIdx(const geometry_msgs::PoseArray pose_array)$/;"	f	class:gaze_tracking
+FindPersonManager	gaze_service/src/check_people_server.cpp	/^    FindPersonManager(std::string name) :$/;"	f	class:FindPersonManager
+FindPersonManager	gaze_service/src/check_people_server.cpp	/^class FindPersonManager {$/;"	c	file:
+FindPersonManager	gaze_service/src/find_people_server.cpp	/^    FindPersonManager(std::string name) :$/;"	f	class:FindPersonManager
+FindPersonManager	gaze_service/src/find_people_server.cpp	/^class FindPersonManager {$/;"	c	file:
+Find_person_manager	gaze_service/scripts/findperson_action_client.py	/^class Find_person_manager(object):$/;"	c
+Fixing	gaze_service/src/gazed_fixing_node.cpp	/^  void Fixing() {$/;"	f	class:GazedPointFixing
+GLOBAL_FRAME	gaze_service/src/ar_gaze_test.cpp	/^static const string GLOBAL_FRAME              = "map";$/;"	v	file:
+Gaze_activate_pub	gaze_service/include/gaze_service_node.h	/^	ros::Publisher Gaze_activate_pub;$/;"	m	class:gaze_srv
+Gaze_activate_pub	gaze_service/src/ar_gaze_test.cpp	/^  ros::Publisher Gaze_activate_pub;$/;"	m	class:ar_tracker	file:
+Gaze_activate_pub	gaze_service/src/clicked_gaze_test.cpp	/^  ros::Publisher Gaze_activate_pub;$/;"	m	class:click_gaze_manager	file:
+Gaze_activate_pub	gaze_service/src/closest_human_gaze.cpp	/^  ros::Publisher Gaze_activate_pub;$/;"	m	class:closest_human_manager	file:
+Gaze_activate_pub	gaze_service/src/gaze_action_server.cpp	/^  ros::Publisher Gaze_activate_pub;$/;"	m	class:gazeAction	file:
+Gaze_activate_pub	gaze_service/src/person_tracking_gaze.cpp	/^  ros::Publisher Gaze_activate_pub;$/;"	m	class:gaze_tracking	file:
+Gaze_controller	gaze_service/scripts/head_joint_control	/^class Gaze_controller:$/;"	c
+Gaze_desiredjoint_pub	gaze_service/src/check_people_server.cpp	/^    ros::Publisher Gaze_desiredjoint_pub;$/;"	m	class:FindPersonManager	file:
+Gaze_desiredjoint_pub	gaze_service/src/find_people_server.cpp	/^    ros::Publisher Gaze_desiredjoint_pub;$/;"	m	class:FindPersonManager	file:
+Gaze_manager	gaze_service/scripts/armarker_test.py	/^class Gaze_manager(object):$/;"	c
+Gaze_manager	gaze_service/scripts/gaze_action_client.py	/^class Gaze_manager(object):$/;"	c
+Gaze_manager	gaze_service/scripts/gazeaction_manager_test.py	/^class Gaze_manager(object):$/;"	c
+Gaze_manager	gaze_service/scripts/gazesrv_manager_test.py	/^class Gaze_manager(object):$/;"	c
+Gaze_manager	gaze_service/scripts/tracking_human	/^class Gaze_manager(object):$/;"	c
+Gaze_point_pub	gaze_service/include/gaze_service_node.h	/^	ros::Publisher Gaze_point_pub;$/;"	m	class:gaze_srv
+Gaze_point_pub	gaze_service/src/clicked_gaze_test.cpp	/^  ros::Publisher Gaze_point_pub;$/;"	m	class:click_gaze_manager	file:
+Gaze_point_pub	gaze_service/src/closest_human_gaze.cpp	/^  ros::Publisher Gaze_point_pub;$/;"	m	class:closest_human_manager	file:
+Gaze_point_pub	gaze_service/src/gaze_action_server.cpp	/^  ros::Publisher Gaze_point_pub;$/;"	m	class:gazeAction	file:
+Gaze_point_pub	gaze_service/src/person_tracking_gaze.cpp	/^  ros::Publisher Gaze_point_pub;$/;"	m	class:gaze_tracking	file:
+GazedPointFixing	gaze_service/src/gazed_fixing_node.cpp	/^  GazedPointFixing() :$/;"	f	class:GazedPointFixing
+GazedPointFixing	gaze_service/src/gazed_fixing_node.cpp	/^class GazedPointFixing {$/;"	c	file:
+HUMANS_DETECTED	visual_perception/include/human_belief.h	55;"	d
+HUMAN_MARKER_H	visual_perception/include/people_marker.h	2;"	d
+HUMAN_OCCUPIED	visual_perception/include/human_belief.h	56;"	d
+HeadAngle_Manager	gaze_service/src/getheadangle_server.cpp	/^  explicit HeadAngle_Manager(std::string name):$/;"	f	class:HeadAngle_Manager
+HeadAngle_Manager	gaze_service/src/getheadangle_server.cpp	/^class HeadAngle_Manager{$/;"	c	file:
+Head_Pos	gaze_service/src/getheadangle_server.cpp	/^  std::vector<double> Head_Pos; $/;"	m	class:HeadAngle_Manager	file:
+Head_Pos	visual_perception/include/human_belief.h	/^  std::vector<double> Head_Pos; $/;"	m	class:belief_manager
+Head_Pos	visual_perception/include/octomap_checker.h	/^    std::vector<double> Head_Pos;$/;"	m	class:Octomap_manager
+Head_Pos	visual_perception/include/particle_artrack.h	/^    std::vector<double> Head_Pos;$/;"	m	class:Particle_person
+Head_Pos	visual_perception/include/visible_region.h	/^  std::vector<double> Head_Pos; $/;"	m	class:visible_manager
+Head_vel	visual_perception/include/octomap_checker.h	/^    std::vector<double> Head_vel;$/;"	m	class:Octomap_manager
+Head_vel	visual_perception/include/particle_artrack.h	/^    std::vector<double> Head_vel;$/;"	m	class:Particle_person
+Human_Belief_Scan_map	visual_perception/include/human_belief.h	/^  nav_msgs::OccupancyGrid Human_Belief_Scan_map;$/;"	m	class:belief_manager
+Human_Belief_type_map	visual_perception/include/human_belief.h	/^  nav_msgs::OccupancyGrid Human_Belief_type_map;$/;"	m	class:belief_manager
+Human_pub	gaze_service/src/check_people_server.cpp	/^    ros::Publisher Human_pub;$/;"	m	class:FindPersonManager	file:
+Human_pub	gaze_service/src/find_people_server.cpp	/^    ros::Publisher Human_pub;$/;"	m	class:FindPersonManager	file:
+INSCRIBED_INFLATED_OBSTACLE	visual_perception/src/human_belief.cpp	/^static const unsigned char  INSCRIBED_INFLATED_OBSTACLE = 253;$/;"	v	file:
+IsActivated	gaze_service/src/getheadangle_server.cpp	/^  bool IsActivated;$/;"	m	class:HeadAngle_Manager	file:
+IsHeadMoving	visual_perception/include/octomap_checker.h	/^	bool IsHeadMoving;$/;"	m	class:Octomap_manager
+IsHeadMoving	visual_perception/include/particle_artrack.h	/^	bool IsHeadMoving;$/;"	m	class:Particle_person
+IsHuman	gaze_service/src/check_people_server.cpp	/^    bool IsHuman;$/;"	m	class:FindPersonManager	file:
+IsHuman	gaze_service/src/find_people_server.cpp	/^    bool IsHuman;$/;"	m	class:FindPersonManager	file:
+IsHuman	gaze_service/src/getheadangle_server.cpp	/^  bool IsHuman;$/;"	m	class:HeadAngle_Manager	file:
+IsNotInitilized	visual_perception/src/human_belief.cpp	/^bool IsNotInitilized = true;$/;"	v
+IsNotInitilized	visual_perception/src/visible_region.cpp	/^bool IsNotInitilized = true;$/;"	v
+IsRobotMoving	gaze_service/src/getheadangle_server.cpp	/^  bool IsRobotMoving;$/;"	m	class:HeadAngle_Manager	file:
+IsRobotMoving	visual_perception/include/octomap_checker.h	/^	bool IsRobotMoving;$/;"	m	class:Octomap_manager
+IsRobotMoving	visual_perception/include/particle_artrack.h	/^	bool IsRobotMoving;$/;"	m	class:Particle_person
+JointStateCallback_	gaze_service/src/gazed_fixing_node.cpp	/^  void JointStateCallback_(const sensor_msgs::JointState& msg) {$/;"	f	class:GazedPointFixing	file:
+LASER_Dist_person	visual_perception/include/human_belief.h	48;"	d
+LASER_Dist_person	visual_perception/include/visible_region.h	36;"	d
+LASER_RANGE	gaze_service/src/getheadangle_server.cpp	33;"	d	file:
+LETHAL_OBSTACLE	visual_perception/src/human_belief.cpp	/^static const unsigned char  LETHAL_OBSTACLE = 254;$/;"	v	file:
+MARKERS_MAX	gaze_service/scripts/moving_human_marker.py	/^MARKERS_MAX = 100$/;"	v
+MARKERS_MAX	gaze_service/scripts/single_gaze_target.py	/^MARKERS_MAX = 100$/;"	v
+MATH_PI	visual_perception/include/human_belief.h	46;"	d
+MATH_PI	visual_perception/include/visible_region.h	34;"	d
+Mapidx2GlobalCoord	visual_perception/src/human_belief.cpp	/^void belief_manager::Mapidx2GlobalCoord(int map_idx, std::vector<double>& global_coords)$/;"	f	class:belief_manager
+NO_HUMANS_DETECTED	visual_perception/include/human_belief.h	57;"	d
+NO_INFORMATION	visual_perception/src/human_belief.cpp	/^static const unsigned char  NO_INFORMATION = 255;$/;"	v	file:
+Octomap_manager	visual_perception/include/octomap_checker.h	/^class Octomap_manager$/;"	c
+Octomap_manager	visual_perception/src/octomap_checker.cpp	/^Octomap_manager::Octomap_manager() :$/;"	f	class:Octomap_manager
+PARTICLE_PEOPLE	visual_perception/include/octomap_checker.h	2;"	d
+PARTICLE_PEOPLE	visual_perception/include/particle_artrack.h	2;"	d
+PROB_THRESH	visual_perception/include/human_belief.h	58;"	d
+P_S_given_H	visual_perception/include/human_belief.h	50;"	d
+P_S_given_Hc	visual_perception/include/human_belief.h	51;"	d
+P_Sc_given_H	visual_perception/include/human_belief.h	52;"	d
+P_Sc_given_Hc	visual_perception/include/human_belief.h	53;"	d
+Particle_person	visual_perception/include/particle_artrack.h	/^class Particle_person$/;"	c
+Particle_person	visual_perception/src/particle_artrack.cpp	/^Particle_person::Particle_person() :$/;"	f	class:Particle_person
+PeopleMarker	visual_perception/include/people_marker.h	/^class PeopleMarker$/;"	c
+PeopleMarker	visual_perception/src/people_marker.cpp	/^PeopleMarker::PeopleMarker() :$/;"	f	class:PeopleMarker
+Pre_IsHuman	gaze_service/src/getheadangle_server.cpp	/^  bool Pre_IsHuman;$/;"	m	class:HeadAngle_Manager	file:
+Publish_gazetarget	gaze_service/src/ar_gaze_test.cpp	/^  void Publish_gazetarget(float _x, float _y)$/;"	f	class:ar_tracker
+Publish_gazetarget	gaze_service/src/clicked_gaze_test.cpp	/^  void Publish_gazetarget(float _x, float _y)$/;"	f	class:click_gaze_manager
+Publish_gazetarget	gaze_service/src/closest_human_gaze.cpp	/^  void Publish_gazetarget(float _x, float _y)$/;"	f	class:closest_human_manager
+Publish_gazetarget	gaze_service/src/getheadangle_server.cpp	/^  void Publish_gazetarget(float _x, float _y)$/;"	f	class:HeadAngle_Manager
+Publish_gazetarget	gaze_service/src/person_tracking_gaze.cpp	/^  void Publish_gazetarget(float _x, float _y)$/;"	f	class:gaze_tracking
+Publish_nav_target	gaze_service/src/gaze_service_node.cpp	/^void gaze_srv::Publish_nav_target(float _x, float _y, float _theta)$/;"	f	class:gaze_srv
+Run	gaze_service/src/gazed_fixing_node.cpp	/^void Run() {$/;"	f
+Scaled_map	visual_perception/include/human_belief.h	/^  nav_msgs::OccupancyGrid Scaled_map;$/;"	m	class:belief_manager
+Scaled_map	visual_perception/include/visible_region.h	/^  nav_msgs::OccupancyGrid Scaled_map;$/;"	m	class:visible_manager
+Scaled_static_map_sub	visual_perception/include/human_belief.h	/^  ros::Subscriber Scaled_static_map_sub;$/;"	m	class:belief_manager
+Scaled_static_map_sub	visual_perception/include/visible_region.h	/^  ros::Subscriber Scaled_static_map_sub;$/;"	m	class:visible_manager
+TIME_INTERVAL_FIND_HUMAN	gaze_service/src/getheadangle_server.cpp	35;"	d	file:
+TIME_INTERVAL_GAZE	gaze_service/src/check_people_server.cpp	19;"	d	file:
+TIME_INTERVAL_GAZE	gaze_service/src/find_people_server.cpp	19;"	d	file:
+TIME_INTERVAL_GAZE	gaze_service/src/getheadangle_server.cpp	36;"	d	file:
+TIME_NORMAL_INTERVAL_GAZE	gaze_service/src/getheadangle_server.cpp	37;"	d	file:
+TargetPointCallback_	gaze_service/src/gazed_fixing_node.cpp	/^  void TargetPointCallback_(const geometry_msgs::PointConstPtr& point) {$/;"	f	class:GazedPointFixing	file:
+Target_Dist_person	visual_perception/include/human_belief.h	47;"	d
+Target_Dist_person	visual_perception/include/visible_region.h	35;"	d
+Target_Search_map	visual_perception/include/human_belief.h	/^  nav_msgs::OccupancyGrid Target_Search_map;$/;"	m	class:belief_manager
+__init__	gaze_service/scripts/armarker_test.py	/^    def __init__(self, wait=0.0):$/;"	m	class:Gaze_manager
+__init__	gaze_service/scripts/findperson_action_client.py	/^    def __init__(self, wait=0.0):$/;"	m	class:Find_person_manager
+__init__	gaze_service/scripts/gaze_action_client.py	/^    def __init__(self, wait=0.0):$/;"	m	class:Gaze_manager
+__init__	gaze_service/scripts/gazeaction_manager_test.py	/^    def __init__(self, wait=0.0):$/;"	m	class:Gaze_manager
+__init__	gaze_service/scripts/gazesrv_manager_test.py	/^    def __init__(self, wait=0.0):$/;"	m	class:Gaze_manager
+__init__	gaze_service/scripts/head_joint_control	/^    def __init__(self, wait=0.0):$/;"	m	class:Gaze_controller
+__init__	gaze_service/scripts/tracking_human	/^    def __init__(self, wait=0.0):$/;"	m	class:Gaze_manager
+action_name_	gaze_service/src/check_people_server.cpp	/^    std::string action_name_;$/;"	m	class:FindPersonManager	file:
+action_name_	gaze_service/src/find_people_server.cpp	/^    std::string action_name_;$/;"	m	class:FindPersonManager	file:
+action_name_	gaze_service/src/gaze_action_server.cpp	/^  std::string action_name_;$/;"	m	class:gazeAction	file:
+action_name_	gaze_service/src/getheadangle_server.cpp	/^  std::string action_name_;$/;"	m	class:HeadAngle_Manager	file:
+action_name_	visual_perception/include/human_belief.h	/^  std::string action_name_;$/;"	m	class:belief_manager
+activation_sub_	gaze_service/src/gazed_fixing_node.cpp	/^  ros::Subscriber activation_sub_;$/;"	m	class:GazedPointFixing	file:
+ar_marker_sub	visual_perception/include/particle_artrack.h	/^    ros::Subscriber ar_marker_sub;$/;"	m	class:Particle_person
+ar_pose_callback	visual_perception/src/octomap_checker.cpp	/^void Octomap_manager::ar_pose_callback(const ar_track_alvar_msgs::AlvarMarkers::ConstPtr& msg)$/;"	f	class:Octomap_manager
+ar_pose_callback	visual_perception/src/particle_artrack.cpp	/^void Particle_person::ar_pose_callback(const ar_track_alvar_msgs::AlvarMarkers::ConstPtr& msg)$/;"	f	class:Particle_person
+ar_tracker	gaze_service/src/ar_gaze_test.cpp	/^  explicit ar_tracker(){}$/;"	f	class:ar_tracker
+ar_tracker	gaze_service/src/ar_gaze_test.cpp	/^class ar_tracker{$/;"	c	file:
+armarker_Callback	gaze_service/src/ar_gaze_test.cpp	/^  void armarker_Callback(const ar_track_alvar_msgs::AlvarMarkers::ConstPtr& markers_msg)$/;"	f	class:ar_tracker
+armarker_callback	gaze_service/scripts/armarker_test.py	/^    def armarker_callback(self, data):$/;"	m	class:Gaze_manager
+array_publisher	gaze_service/scripts/moving_human_marker.py	/^array_publisher = rospy.Publisher(topic_array, MarkerArray,queue_size=10)$/;"	v
+as_	gaze_service/src/check_people_server.cpp	/^    actionlib::SimpleActionServer<gaze_service::FindPersonAction> as_;$/;"	m	class:FindPersonManager	file:
+as_	gaze_service/src/find_people_server.cpp	/^    actionlib::SimpleActionServer<gaze_service::FindPersonAction> as_;$/;"	m	class:FindPersonManager	file:
+as_	gaze_service/src/gaze_action_server.cpp	/^  actionlib::SimpleActionServer<gaze_service::GazingAction> as_;$/;"	m	class:gazeAction	file:
+as_	gaze_service/src/getheadangle_server.cpp	/^  actionlib::SimpleActionServer<gaze_service::GetHeadAngleAction> as_;$/;"	m	class:HeadAngle_Manager	file:
+as_	visual_perception/include/human_belief.h	/^  actionlib::SimpleActionServer<visual_perception::SearchAction> as_;$/;"	m	class:belief_manager
+belief_manager	visual_perception/include/human_belief.h	/^class belief_manager$/;"	c
+belief_manager	visual_perception/src/human_belief.cpp	/^belief_manager::belief_manager(std::string name)$/;"	f	class:belief_manager
+belief_pub	visual_perception/include/human_belief.h	/^  ros::Publisher belief_pub;$/;"	m	class:belief_manager
+blacklist_radius_	visual_perception/include/human_belief.h	/^  double blacklist_radius_;$/;"	m	class:belief_manager
+buildNewFrontier	visual_perception/src/human_belief.cpp	/^frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int initial_cell, unsigned int reference_, std::vector<bool>& frontier_flag){$/;"	f	class:belief_manager
+camera_visible_region	visual_perception/include/human_belief.h	/^  nav_msgs::OccupancyGrid camera_visible_region;$/;"	m	class:belief_manager
+camera_visible_region	visual_perception/include/visible_region.h	/^  nav_msgs::OccupancyGrid camera_visible_region;$/;"	m	class:visible_manager
+camera_visible_region_pub	visual_perception/include/human_belief.h	/^  ros::Publisher camera_visible_region_pub;$/;"	m	class:belief_manager
+camera_visible_region_pub	visual_perception/include/visible_region.h	/^  ros::Publisher camera_visible_region_pub;$/;"	m	class:visible_manager
+cartesianToPolar	visual_perception/src/people_marker.cpp	/^std::vector<double> PeopleMarker::cartesianToPolar(geometry_msgs::Point point) {$/;"	f	class:PeopleMarker
+check_cameraregion	visual_perception/src/human_belief.cpp	/^bool belief_manager::check_cameraregion(float x_pos,float y_pos)$/;"	f	class:belief_manager
+check_cameraregion	visual_perception/src/visible_region.cpp	/^bool visible_manager::check_cameraregion(float x_pos,float y_pos)$/;"	f	class:visible_manager
+check_staticObs	visual_perception/src/human_belief.cpp	/^bool belief_manager::check_staticObs(float x_pos,float y_pos)$/;"	f	class:belief_manager
+check_staticObs	visual_perception/src/visible_region.cpp	/^bool visible_manager::check_staticObs(float x_pos,float y_pos)$/;"	f	class:visible_manager
+click_gaze_manager	gaze_service/src/clicked_gaze_test.cpp	/^  explicit click_gaze_manager(){}$/;"	f	class:click_gaze_manager
+click_gaze_manager	gaze_service/src/clicked_gaze_test.cpp	/^class click_gaze_manager{$/;"	c	file:
+closest_human_manager	gaze_service/src/closest_human_gaze.cpp	/^  explicit closest_human_manager(){$/;"	f	class:closest_human_manager
+closest_human_manager	gaze_service/src/closest_human_gaze.cpp	/^class closest_human_manager{$/;"	c	file:
+cloud	visual_perception/include/octomap_checker.h	/^    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud;$/;"	m	class:Octomap_manager
+cloud	visual_perception/include/particle_artrack.h	/^    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud;$/;"	m	class:Particle_person
+cloud_callback	visual_perception/src/octomap_checker.cpp	/^void Octomap_manager::cloud_callback(const sensor_msgs::PointCloud2 &msg)$/;"	f	class:Octomap_manager
+cloud_callback	visual_perception/src/particle_artrack.cpp	/^void Particle_person::cloud_callback(const sensor_msgs::PointCloud2 &msg)$/;"	f	class:Particle_person
+cmd_cb	gaze_service/scripts/head_joint_control	/^    def cmd_cb(self,msg):$/;"	m	class:Gaze_controller
+cmd_flag	gaze_service/src/getheadangle_server.cpp	/^  int cmd_flag;$/;"	m	class:HeadAngle_Manager	file:
+comparator	visual_perception/include/human_belief.h	/^bool comparator( const mypair& l, const mypair& r)$/;"	f
+costmap_	visual_perception/include/human_belief.h	/^  unsigned char* costmap_;$/;"	m	class:belief_manager
+costmap_size_x	visual_perception/include/human_belief.h	/^  unsigned int costmap_size_x;$/;"	m	class:belief_manager
+costmap_size_y	visual_perception/include/human_belief.h	/^  unsigned int costmap_size_y;$/;"	m	class:belief_manager
+count	gaze_service/scripts/moving_human_marker.py	/^count = 0$/;"	v
+count	gaze_service/scripts/single_gaze_target.py	/^count = 0$/;"	v
+cov_meas_legs_m	gaze_service/src/ar_gaze_test.cpp	/^static double cov_meas_legs_m          = 0.025;$/;"	v	file:
+cov_meas_people_m	gaze_service/src/ar_gaze_test.cpp	/^static double cov_meas_people_m        = 0.025;$/;"	v	file:
+createArms	visual_perception/src/people_marker.cpp	/^std::vector<visualization_msgs::Marker> PeopleMarker::createArms($/;"	f	class:PeopleMarker
+createBody	visual_perception/src/people_marker.cpp	/^visualization_msgs::Marker PeopleMarker::createBody($/;"	f	class:PeopleMarker
+createHead	visual_perception/src/people_marker.cpp	/^visualization_msgs::Marker PeopleMarker::createHead($/;"	f	class:PeopleMarker
+createHuman	visual_perception/src/people_marker.cpp	/^std::vector<visualization_msgs::Marker> PeopleMarker::createHuman(int id,geometry_msgs::Pose pose) {$/;"	f	class:PeopleMarker
+createLegs	visual_perception/src/people_marker.cpp	/^std::vector<visualization_msgs::Marker> PeopleMarker::createLegs($/;"	f	class:PeopleMarker
+createMarker	visual_perception/src/people_marker.cpp	/^visualization_msgs::Marker PeopleMarker::createMarker($/;"	f	class:PeopleMarker
+createVisualisation	visual_perception/src/people_marker.cpp	/^void PeopleMarker::createVisualisation(std::vector<geometry_msgs::Pose> poses) {$/;"	f	class:PeopleMarker
+cur_target	visual_perception/include/human_belief.h	/^  std::vector< std::vector< double > > cur_target;$/;"	m	class:belief_manager
+cur_yolo_people	visual_perception/include/visible_region.h	/^  std::vector< std::vector< double > > cur_yolo_people;$/;"	m	class:visible_manager
+current_joint_state_	gaze_service/src/gazed_fixing_node.cpp	/^  sensor_msgs::JointState current_joint_state_;$/;"	m	class:GazedPointFixing	file:
+data_count_	gaze_service/src/check_people_server.cpp	/^    int data_count_, goal_;$/;"	m	class:FindPersonManager	file:
+data_count_	gaze_service/src/find_people_server.cpp	/^    int data_count_, goal_;$/;"	m	class:FindPersonManager	file:
+data_count_	gaze_service/src/gaze_action_server.cpp	/^  int data_count_, goal_;$/;"	m	class:gazeAction	file:
+desired_target	gaze_service/src/getheadangle_server.cpp	/^  double desired_target;$/;"	m	class:HeadAngle_Manager	file:
+det_dist__for_pause	gaze_service/src/ar_gaze_test.cpp	/^static const double det_dist__for_pause      = 0.5; \/\/ the distance to the person when the robot decides to pause$/;"	v	file:
+det_dist__for_resume	gaze_service/src/ar_gaze_test.cpp	/^static const double det_dist__for_resume      = 2.5; \/\/ the distance to the person when the robot decides to resume$/;"	v	file:
+detect_seq	visual_perception/include/octomap_checker.h	/^    unsigned long detect_seq;$/;"	m	class:Octomap_manager
+detect_seq	visual_perception/include/particle_artrack.h	/^    unsigned long detect_seq;$/;"	m	class:Particle_person
+detect_seq	visual_perception/include/people_marker.h	/^    unsigned long detect_seq;$/;"	m	class:PeopleMarker
+detector_	gaze_service/src/ar_gaze_test.cpp	/^static string detector_="hsrb\/base_scan";$/;"	v	file:
+dyn_map_callback	visual_perception/src/human_belief.cpp	/^void belief_manager::dyn_map_callback(const nav_msgs::OccupancyGrid::ConstPtr& msg)$/;"	f	class:belief_manager
+dynamic_belief_map	visual_perception/include/human_belief.h	/^  nav_msgs::OccupancyGrid dynamic_belief_map;$/;"	m	class:belief_manager
+executeCB	gaze_service/src/check_people_server.cpp	/^    void executeCB(const gaze_service::FindPersonGoalConstPtr &goal) {$/;"	f	class:FindPersonManager
+executeCB	gaze_service/src/find_people_server.cpp	/^    void executeCB(const gaze_service::FindPersonGoalConstPtr &goal) {$/;"	f	class:FindPersonManager
+executeCB	gaze_service/src/gaze_action_server.cpp	/^  void executeCB(const gaze_service::GazingGoalConstPtr &goal)$/;"	f	class:gazeAction
+executeCB	gaze_service/src/getheadangle_server.cpp	/^void executeCB(const gaze_service::GetHeadAngleGoalConstPtr &goal)$/;"	f	class:HeadAngle_Manager
+executeCB	visual_perception/src/human_belief.cpp	/^void belief_manager::executeCB(const visual_perception::SearchGoalConstPtr &goal)$/;"	f	class:belief_manager
+face_output_person	visual_perception/include/octomap_checker.h	/^    geometry_msgs::PointStamped face_output_person;$/;"	m	class:Octomap_manager
+face_output_person	visual_perception/include/particle_artrack.h	/^    geometry_msgs::PointStamped face_output_person;$/;"	m	class:Particle_person
+face_person_pub	visual_perception/include/particle_artrack.h	/^    ros::Publisher  face_person_pub;$/;"	m	class:Particle_person
+face_result	visual_perception/include/octomap_checker.h	/^    std::vector<double> face_result;$/;"	m	class:Octomap_manager
+face_result	visual_perception/include/particle_artrack.h	/^    std::vector<double> face_result;$/;"	m	class:Particle_person
+face_sub	visual_perception/include/particle_artrack.h	/^    ros::Subscriber face_sub;$/;"	m	class:Particle_person
+feedback_	gaze_service/src/check_people_server.cpp	/^    gaze_service::FindPersonFeedback feedback_;$/;"	m	class:FindPersonManager	file:
+feedback_	gaze_service/src/find_people_server.cpp	/^    gaze_service::FindPersonFeedback feedback_;$/;"	m	class:FindPersonManager	file:
+feedback_	gaze_service/src/gaze_action_server.cpp	/^  gaze_service::GazingFeedback feedback_;$/;"	m	class:gazeAction	file:
+feedback_	gaze_service/src/getheadangle_server.cpp	/^  gaze_service::GetHeadAngleFeedback feedback_;$/;"	m	class:HeadAngle_Manager	file:
+feedback_	visual_perception/include/human_belief.h	/^  visual_perception::SearchFeedback feedback_;$/;"	m	class:belief_manager
+filter_mutex_	visual_perception/include/human_belief.h	/^  boost::mutex filter_mutex_;$/;"	m	class:belief_manager
+filter_mutex_	visual_perception/include/visible_region.h	/^  boost::mutex filter_mutex_;$/;"	m	class:visible_manager
+find_manager	gaze_service/scripts/findperson_action_client.py	/^    find_manager = Find_person_manager(float(sys.argv[1]) if len(sys.argv) > 1 else 0.0)$/;"	v
+fixed_frame	gaze_service/src/ar_gaze_test.cpp	/^static const string fixed_frame              = "\/map";$/;"	v	file:
+fixed_frame_	visual_perception/include/human_belief.h	/^  std::string fixed_frame_;$/;"	m	class:belief_manager
+fixed_frame_	visual_perception/include/visible_region.h	/^  std::string fixed_frame_;$/;"	m	class:visible_manager
+flag	gaze_service/src/check_people_server.cpp	/^    int flag;$/;"	m	class:FindPersonManager	file:
+flag	gaze_service/src/find_people_server.cpp	/^    int flag;$/;"	m	class:FindPersonManager	file:
+flagiter	gaze_service/src/check_people_server.cpp	/^    int flagiter;$/;"	m	class:FindPersonManager	file:
+flagiter	gaze_service/src/find_people_server.cpp	/^    int flagiter;$/;"	m	class:FindPersonManager	file:
+frontierCost	visual_perception/src/human_belief.cpp	/^double belief_manager::frontierCost(const frontier_exploration::Frontier& frontier)$/;"	f	class:belief_manager
+frontier_cloud_pub	visual_perception/include/human_belief.h	/^  ros::Publisher frontier_cloud_pub;$/;"	m	class:belief_manager
+frontier_marker_pub	visual_perception/include/human_belief.h	/^  ros::Publisher frontier_marker_pub;$/;"	m	class:belief_manager
+gain_scale_	visual_perception/include/human_belief.h	/^  double gain_scale_;$/;"	m	class:belief_manager
+gazeAction	gaze_service/src/gaze_action_server.cpp	/^  gazeAction(std::string name): $/;"	f	class:gazeAction
+gazeAction	gaze_service/src/gaze_action_server.cpp	/^class gazeAction$/;"	c	file:
+gaze_manager	gaze_service/scripts/armarker_test.py	/^    gaze_manager = Gaze_manager(float(sys.argv[1]) if len(sys.argv) > 1 else 0.0)$/;"	v
+gaze_manager	gaze_service/scripts/gaze_action_client.py	/^    gaze_manager = Gaze_manager(float(sys.argv[1]) if len(sys.argv) > 1 else 0.0)$/;"	v
+gaze_manager	gaze_service/scripts/gazeaction_manager_test.py	/^    gaze_manager = Gaze_manager(float(sys.argv[1]) if len(sys.argv) > 1 else 0.0)$/;"	v
+gaze_manager	gaze_service/scripts/gazesrv_manager_test.py	/^    gaze_manager = Gaze_manager(float(sys.argv[1]) if len(sys.argv) > 1 else 0.0)$/;"	v
+gaze_manager	gaze_service/scripts/head_joint_control	/^    gaze_manager = Gaze_controller()$/;"	v	class:Gaze_controller
+gaze_manager	gaze_service/scripts/tracking_human	/^    gaze_manager = Gaze_manager()$/;"	v
+gaze_srv	gaze_service/include/gaze_service_node.h	/^class gaze_srv{$/;"	c
+gaze_srv	gaze_service/src/gaze_service_node.cpp	/^gaze_srv::gaze_srv(){$/;"	f	class:gaze_srv
+gaze_target	gaze_service/src/getheadangle_server.cpp	/^  geometry_msgs::Pose gaze_target;$/;"	m	class:HeadAngle_Manager	file:
+gaze_target_callback	gaze_service/scripts/findperson_action_client.py	/^    def gaze_target_callback(self, data):$/;"	m	class:Find_person_manager
+gaze_target_callback	gaze_service/scripts/gaze_action_client.py	/^    def gaze_target_callback(self, data):$/;"	m	class:Gaze_manager
+gaze_target_callback	gaze_service/scripts/gazeaction_manager_test.py	/^    def gaze_target_callback(self, data):$/;"	m	class:Gaze_manager
+gaze_target_callback	gaze_service/scripts/gazesrv_manager_test.py	/^    def gaze_target_callback(self, data):$/;"	m	class:Gaze_manager
+gaze_target_callback	gaze_service/scripts/tracking_human	/^    def gaze_target_callback(self, data):$/;"	m	class:Gaze_manager
+gaze_target_pose	gaze_service/src/getheadangle_server.cpp	/^  std::vector<double> gaze_target_pose;$/;"	m	class:HeadAngle_Manager	file:
+gaze_tracking	gaze_service/src/person_tracking_gaze.cpp	/^  explicit gaze_tracking(){$/;"	f	class:gaze_tracking
+gaze_tracking	gaze_service/src/person_tracking_gaze.cpp	/^class gaze_tracking{$/;"	c	file:
+generate_extremity_position	visual_perception/src/people_marker.cpp	/^geometry_msgs::Pose PeopleMarker::generate_extremity_position(geometry_msgs::Pose centre, double dx, double dy, double z) {$/;"	f	class:PeopleMarker
+generate_position	visual_perception/src/people_marker.cpp	/^geometry_msgs::Point PeopleMarker::generate_position(geometry_msgs::Point centre, double angle, double dx, double dy)$/;"	f	class:PeopleMarker
+getCameraregion	visual_perception/src/human_belief.cpp	/^void belief_manager::getCameraregion()$/;"	f	class:belief_manager
+getCameraregion	visual_perception/src/visible_region.cpp	/^void visible_manager::getCameraregion()$/;"	f	class:visible_manager
+getCharMap	visual_perception/src/human_belief.cpp	/^unsigned char* belief_manager::getCharMap() const$/;"	f	class:belief_manager
+getDistance_from_Vec	gaze_service/src/closest_human_gaze.cpp	/^double getDistance_from_Vec(std::vector<double> origin, double _x, double _y)$/;"	f	class:closest_human_manager
+getDistance_from_Vec	gaze_service/src/person_tracking_gaze.cpp	/^double getDistance_from_Vec(std::vector<double> origin, double _x, double _y)$/;"	f	class:gaze_tracking
+getDistance_from_Vec	visual_perception/src/human_belief.cpp	/^double belief_manager::getDistance_from_Vec(std::vector<double> origin, double _x, double _y)$/;"	f	class:belief_manager
+getDistance_from_Vec	visual_perception/src/visible_region.cpp	/^double visible_manager::getDistance_from_Vec(std::vector<double> origin, double _x, double _y)$/;"	f	class:visible_manager
+getNextFrontiers	visual_perception/src/human_belief.cpp	/^void belief_manager::getNextFrontiers(const std::vector<frontier_exploration::Frontier>& frontiers)$/;"	f	class:belief_manager
+get_desiredJointAngle	gaze_service/src/getheadangle_server.cpp	/^double get_desiredJointAngle(std::vector<double>& input_target_pose)$/;"	f	class:HeadAngle_Manager
+getlinevalue	visual_perception/src/human_belief.cpp	/^bool belief_manager::getlinevalue(int line_type,double input_x, double input_y)$/;"	f	class:belief_manager
+getlinevalue	visual_perception/src/visible_region.cpp	/^bool visible_manager::getlinevalue(int line_type,double input_x, double input_y)$/;"	f	class:visible_manager
+global_pos_sub	visual_perception/include/octomap_checker.h	/^    ros::Subscriber global_pos_sub;$/;"	m	class:Octomap_manager
+global_pos_sub	visual_perception/include/particle_artrack.h	/^    ros::Subscriber global_pos_sub;$/;"	m	class:Particle_person
+global_pose	gaze_service/src/closest_human_gaze.cpp	/^  std::vector<double> global_pose;$/;"	m	class:closest_human_manager	file:
+global_pose	gaze_service/src/getheadangle_server.cpp	/^  std::vector<double> global_pose;$/;"	m	class:HeadAngle_Manager	file:
+global_pose	gaze_service/src/person_tracking_gaze.cpp	/^  std::vector<double> global_pose;$/;"	m	class:gaze_tracking	file:
+global_pose	visual_perception/include/human_belief.h	/^  std::vector<double> global_pose;$/;"	m	class:belief_manager
+global_pose	visual_perception/include/octomap_checker.h	/^	std::vector<double> global_pose;$/;"	m	class:Octomap_manager
+global_pose	visual_perception/include/particle_artrack.h	/^	std::vector<double> global_pose;$/;"	m	class:Particle_person
+global_pose	visual_perception/include/visible_region.h	/^  std::vector<double> global_pose;$/;"	m	class:visible_manager
+global_pose_callback	visual_perception/src/human_belief.cpp	/^void belief_manager::global_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)$/;"	f	class:belief_manager
+global_pose_callback	visual_perception/src/octomap_checker.cpp	/^void Octomap_manager::global_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)$/;"	f	class:Octomap_manager
+global_pose_callback	visual_perception/src/particle_artrack.cpp	/^void Particle_person::global_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)$/;"	f	class:Particle_person
+global_pose_callback	visual_perception/src/visible_region.cpp	/^void visible_manager::global_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)$/;"	f	class:visible_manager
+globalcoord_To_SScaled_map_index	visual_perception/src/human_belief.cpp	/^int belief_manager::globalcoord_To_SScaled_map_index(float x_pos,float y_pos)$/;"	f	class:belief_manager
+globalcoord_To_SScaled_map_index	visual_perception/src/visible_region.cpp	/^int visible_manager::globalcoord_To_SScaled_map_index(float x_pos,float y_pos)$/;"	f	class:visible_manager
+globalpose_callback	gaze_service/src/closest_human_gaze.cpp	/^void globalpose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg){$/;"	f	class:closest_human_manager
+globalpose_callback	gaze_service/src/getheadangle_server.cpp	/^void globalpose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg){$/;"	f	class:HeadAngle_Manager
+globalpose_callback	gaze_service/src/person_tracking_gaze.cpp	/^void globalpose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg){$/;"	f	class:gaze_tracking
+globalpose_sub	visual_perception/include/human_belief.h	/^  ros::Subscriber globalpose_sub;$/;"	m	class:belief_manager
+globalpose_sub	visual_perception/include/visible_region.h	/^  ros::Subscriber globalpose_sub;$/;"	m	class:visible_manager
+goal_	gaze_service/src/check_people_server.cpp	/^    int data_count_, goal_;$/;"	m	class:FindPersonManager	file:
+goal_	gaze_service/src/find_people_server.cpp	/^    int data_count_, goal_;$/;"	m	class:FindPersonManager	file:
+goal_	gaze_service/src/gaze_action_server.cpp	/^  int data_count_, goal_;$/;"	m	class:gazeAction	file:
+head_kinematics_	gaze_service/src/gazed_fixing_node.cpp	/^  hsr_kinematics::HsrHeadKinematics::Ptr head_kinematics_;$/;"	m	class:GazedPointFixing	file:
+head_trajectory_pub_	gaze_service/src/gazed_fixing_node.cpp	/^  ros::Publisher head_trajectory_pub_;$/;"	m	class:GazedPointFixing	file:
+human_boxes_callback	visual_perception/src/people_marker.cpp	/^void PeopleMarker::human_boxes_callback(const visualization_msgs::MarkerArray::ConstPtr& msg)$/;"	f	class:PeopleMarker
+human_candidates_poses	visual_perception/include/human_belief.h	/^  geometry_msgs::PoseArray human_candidates_poses;$/;"	m	class:belief_manager
+human_candidates_pub	visual_perception/include/human_belief.h	/^  ros::Publisher human_candidates_pub;$/;"	m	class:belief_manager
+human_occupied_idx	visual_perception/include/human_belief.h	/^  std::vector<int> human_occupied_idx;$/;"	m	class:belief_manager
+human_poses	gaze_service/src/check_people_server.cpp	/^    geometry_msgs::PoseArray human_poses;$/;"	m	class:FindPersonManager	file:
+human_poses	gaze_service/src/closest_human_gaze.cpp	/^  geometry_msgs::PoseArray human_poses;$/;"	m	class:closest_human_manager	file:
+human_poses	gaze_service/src/find_people_server.cpp	/^    geometry_msgs::PoseArray human_poses;$/;"	m	class:FindPersonManager	file:
+human_poses	gaze_service/src/getheadangle_server.cpp	/^  geometry_msgs::PoseArray human_poses;$/;"	m	class:HeadAngle_Manager	file:
+human_poses	gaze_service/src/person_tracking_gaze.cpp	/^  geometry_msgs::PoseArray human_poses;$/;"	m	class:gaze_tracking	file:
+human_poses_callback	visual_perception/src/human_belief.cpp	/^void belief_manager::human_poses_callback(const geometry_msgs::PoseArray::ConstPtr& msg)$/;"	f	class:belief_manager
+human_target_pub	visual_perception/include/human_belief.h	/^  ros::Publisher human_target_pub;$/;"	m	class:belief_manager
+human_target_pub	visual_perception/include/visible_region.h	/^  ros::Publisher human_target_pub;$/;"	m	class:visible_manager
+human_yolo_callback	visual_perception/src/visible_region.cpp	/^void visible_manager::human_yolo_callback(const visualization_msgs::MarkerArray::ConstPtr& msg)$/;"	f	class:visible_manager
+id	gaze_service/scripts/moving_human_marker.py	/^   id = 0$/;"	v
+imagepoint_pub	visual_perception/include/octomap_checker.h	/^    ros::Publisher  imagepoint_pub;$/;"	m	class:Octomap_manager
+imagepoint_pub	visual_perception/include/particle_artrack.h	/^    ros::Publisher  imagepoint_pub;$/;"	m	class:Particle_person
+index_of_target_occ_cells_updated_recently	visual_perception/include/human_belief.h	/^  std::vector<int> index_of_target_occ_cells_updated_recently;$/;"	m	class:belief_manager
+int_msg	gaze_service/scripts/moving_human_marker.py	/^   int_msg=std_msgs.msg.Int8()$/;"	v
+isActionActive	visual_perception/include/human_belief.h	/^  bool isActionActive;$/;"	m	class:belief_manager
+isNewFrontierCell	visual_perception/src/human_belief.cpp	/^bool belief_manager::isNewFrontierCell(unsigned int idx, const std::vector<bool>& frontier_flag){$/;"	f	class:belief_manager
+isTargetDetected	visual_perception/include/human_belief.h	/^  bool isTargetDetected;$/;"	m	class:belief_manager
+is_activating_	gaze_service/src/gazed_fixing_node.cpp	/^  bool is_activating_;$/;"	m	class:GazedPointFixing	file:
+joint_state_sub	visual_perception/include/human_belief.h	/^  ros::Subscriber joint_state_sub;$/;"	m	class:belief_manager
+joint_state_sub	visual_perception/include/visible_region.h	/^  ros::Subscriber joint_state_sub;$/;"	m	class:visible_manager
+joint_state_sub_	gaze_service/src/gazed_fixing_node.cpp	/^  ros::Subscriber joint_state_sub_;$/;"	m	class:GazedPointFixing	file:
+joint_states_callback	gaze_service/src/getheadangle_server.cpp	/^void joint_states_callback(const sensor_msgs::JointState::ConstPtr& msg)$/;"	f	class:HeadAngle_Manager
+joint_states_callback	visual_perception/src/human_belief.cpp	/^void belief_manager::joint_states_callback(const sensor_msgs::JointState::ConstPtr& msg)$/;"	f	class:belief_manager
+joint_states_callback	visual_perception/src/octomap_checker.cpp	/^void Octomap_manager::joint_states_callback(const sensor_msgs::JointState::ConstPtr& msg)$/;"	f	class:Octomap_manager
+joint_states_callback	visual_perception/src/particle_artrack.cpp	/^void Particle_person::joint_states_callback(const sensor_msgs::JointState::ConstPtr& msg)$/;"	f	class:Particle_person
+joint_states_callback	visual_perception/src/visible_region.cpp	/^void visible_manager::joint_states_callback(const sensor_msgs::JointState::ConstPtr& msg)$/;"	f	class:visible_manager
+joint_states_sub	visual_perception/include/octomap_checker.h	/^    ros::Subscriber joint_states_sub;$/;"	m	class:Octomap_manager
+joint_states_sub	visual_perception/include/particle_artrack.h	/^    ros::Subscriber joint_states_sub;$/;"	m	class:Particle_person
+kOriginLink	gaze_service/src/gazed_fixing_node.cpp	/^  const char* kOriginLink = "odom";$/;"	m	namespace:__anon1	file:
+kRate	gaze_service/src/gazed_fixing_node.cpp	/^  const double kRate = 10.0;$/;"	m	namespace:__anon1	file:
+kRobotBaseLink	gaze_service/src/gazed_fixing_node.cpp	/^  const char* kRobotBaseLink = "base_link";$/;"	m	namespace:__anon1	file:
+kal_p	gaze_service/src/ar_gaze_test.cpp	/^static double kal_p =4, kal_q = 0.002, kal_r = 10;$/;"	v	file:
+kal_q	gaze_service/src/ar_gaze_test.cpp	/^static double kal_p =4, kal_q = 0.002, kal_r = 10;$/;"	v	file:
+kal_r	gaze_service/src/ar_gaze_test.cpp	/^static double kal_p =4, kal_q = 0.002, kal_r = 10;$/;"	v	file:
+last_markers_count_	visual_perception/include/human_belief.h	/^  int last_markers_count_;$/;"	m	class:belief_manager
+last_target_direction	gaze_service/src/getheadangle_server.cpp	/^  int last_target_direction; \/\/ left :1 . right :-1$/;"	m	class:HeadAngle_Manager	file:
+listener	gaze_service/include/gaze_service_node.h	/^	tf::TransformListener 	  listener;$/;"	m	class:gaze_srv
+listener	gaze_service/scripts/armarker_test.py	/^    def listener(self,wait=0.0):$/;"	m	class:Gaze_manager
+listener	gaze_service/scripts/findperson_action_client.py	/^    def listener(self,wait=0.0):$/;"	m	class:Find_person_manager
+listener	gaze_service/scripts/gaze_action_client.py	/^    def listener(self,wait=0.0):$/;"	m	class:Gaze_manager
+listener	gaze_service/scripts/gazeaction_manager_test.py	/^    def listener(self,wait=0.0):$/;"	m	class:Gaze_manager
+listener	gaze_service/scripts/gazesrv_manager_test.py	/^    def listener(self,wait=0.0):$/;"	m	class:Gaze_manager
+listener	gaze_service/scripts/head_joint_control	/^    def listener(self,wait=0.0):$/;"	m	class:Gaze_controller
+listener	gaze_service/scripts/tracking_human	/^    def listener(self,wait=0.0):$/;"	m	class:Gaze_manager
+listener	gaze_service/src/ar_gaze_test.cpp	/^  tf::TransformListener     listener;$/;"	m	class:ar_tracker	file:
+listener	gaze_service/src/clicked_gaze_test.cpp	/^  tf::TransformListener     listener;$/;"	m	class:click_gaze_manager	file:
+listener	gaze_service/src/closest_human_gaze.cpp	/^  tf::TransformListener     listener;$/;"	m	class:closest_human_manager	file:
+listener	gaze_service/src/getheadangle_server.cpp	/^  tf::TransformListener     listener;$/;"	m	class:HeadAngle_Manager	file:
+listener	gaze_service/src/person_tracking_gaze.cpp	/^  tf::TransformListener     listener;$/;"	m	class:gaze_tracking	file:
+listener	visual_perception/include/human_belief.h	/^  tf::TransformListener     listener;$/;"	m	class:belief_manager
+listener	visual_perception/include/octomap_checker.h	/^    tf::TransformListener listener;$/;"	m	class:Octomap_manager
+listener	visual_perception/include/particle_artrack.h	/^    tf::TransformListener listener;$/;"	m	class:Particle_person
+listener	visual_perception/include/people_marker.h	/^    tf::TransformListener* listener;$/;"	m	class:PeopleMarker
+listener	visual_perception/include/visible_region.h	/^  tf::TransformListener     listener;$/;"	m	class:visible_manager
+listener_	gaze_service/src/gazed_fixing_node.cpp	/^  tf2_ros::TransformListener listener_;$/;"	m	class:GazedPointFixing	file:
+m_client	gaze_service/src/ar_gaze_test.cpp	/^  ros::ServiceClient m_client; $/;"	m	class:ar_tracker	file:
+m_client	gaze_service/src/clicked_gaze_test.cpp	/^  ros::ServiceClient m_client; $/;"	m	class:click_gaze_manager	file:
+m_client	gaze_service/src/closest_human_gaze.cpp	/^  ros::ServiceClient m_client; $/;"	m	class:closest_human_manager	file:
+m_client	gaze_service/src/person_tracking_gaze.cpp	/^  ros::ServiceClient m_client; $/;"	m	class:gaze_tracking	file:
+m_dyn_occupancy	visual_perception/include/human_belief.h	/^  std::vector<double> m_dyn_occupancy;$/;"	m	class:belief_manager
+m_prob_occupancy	visual_perception/include/human_belief.h	/^  std::vector<double> m_prob_occupancy;$/;"	m	class:belief_manager
+main	gaze_service/src/ar_gaze_test.cpp	/^int main(int argc, char **argv)$/;"	f
+main	gaze_service/src/check_people_server.cpp	/^int main(int argc, char **argv) {$/;"	f
+main	gaze_service/src/clicked_gaze_test.cpp	/^int main(int argc, char **argv)$/;"	f
+main	gaze_service/src/closest_human_gaze.cpp	/^int main(int argc, char **argv)$/;"	f
+main	gaze_service/src/find_people_server.cpp	/^int main(int argc, char **argv) {$/;"	f
+main	gaze_service/src/gaze_action_client.cpp	/^int main (int argc, char **argv)$/;"	f
+main	gaze_service/src/gaze_action_server.cpp	/^int main(int argc, char** argv)$/;"	f
+main	gaze_service/src/gaze_service_test.cpp	/^int main(int argc, char **argv)$/;"	f
+main	gaze_service/src/gazed_fixing_node.cpp	/^int main(int argc, char** argv) {$/;"	f
+main	gaze_service/src/getheadangle_server.cpp	/^int main(int argc, char **argv)$/;"	f
+main	gaze_service/src/person_tracking_gaze.cpp	/^int main(int argc, char **argv)$/;"	f
+main	visual_perception/src/human_belief.cpp	/^int main(int argc, char **argv)$/;"	f
+main	visual_perception/src/octomap_checker.cpp	/^int main(int argc, char **argv)$/;"	f
+main	visual_perception/src/particle_artrack.cpp	/^int main(int argc, char **argv)$/;"	f
+main	visual_perception/src/people_marker.cpp	/^int main(int argc, char **argv)$/;"	f
+main	visual_perception/src/visible_region.cpp	/^int main(int argc, char **argv)$/;"	f
+map_index_of_target_cells_to_prob	visual_perception/include/human_belief.h	/^  std::map<int, float> map_index_of_target_cells_to_prob;$/;"	m	class:belief_manager
+map_res	visual_perception/include/human_belief.h	/^  double map_res;$/;"	m	class:belief_manager
+marker	gaze_service/scripts/moving_human_marker.py	/^   marker = Marker()$/;"	v
+marker	gaze_service/scripts/single_gaze_target.py	/^   marker = Marker()$/;"	v
+marker2	gaze_service/scripts/moving_human_marker.py	/^   marker2 = Marker()$/;"	v
+marker3	gaze_service/scripts/moving_human_marker.py	/^   marker3 = Marker()$/;"	v
+markerArray	gaze_service/scripts/moving_human_marker.py	/^markerArray = MarkerArray()$/;"	v
+markerArray	gaze_service/scripts/single_gaze_target.py	/^markerArray = MarkerArray()$/;"	v
+marker_seq	visual_perception/include/octomap_checker.h	/^    unsigned long marker_seq;$/;"	m	class:Octomap_manager
+marker_seq	visual_perception/include/particle_artrack.h	/^    unsigned long marker_seq;$/;"	m	class:Particle_person
+marker_seq	visual_perception/include/people_marker.h	/^    unsigned long marker_seq;$/;"	m	class:PeopleMarker
+max_meas_jump_m	gaze_service/src/ar_gaze_test.cpp	/^static const double max_meas_jump_m          = 0.75; \/\/0.75; \/\/ 1.0$/;"	v	file:
+max_second_leg_age_s	gaze_service/src/ar_gaze_test.cpp	/^static const double max_second_leg_age_s     = 2.0;$/;"	v	file:
+max_track_jump_m	gaze_service/src/ar_gaze_test.cpp	/^static const double max_track_jump_m         = 1.0; \/\/1.0;$/;"	v	file:
+min_frontier_size_	visual_perception/include/human_belief.h	/^  unsigned int min_frontier_size_;$/;"	m	class:belief_manager
+mutex_	gaze_service/src/gazed_fixing_node.cpp	/^  mutable boost::mutex mutex_;$/;"	m	class:GazedPointFixing	file:
+mypair	visual_perception/include/human_belief.h	/^typedef std::pair<double,int> mypair;$/;"	t
+navTarget_pub	gaze_service/src/getheadangle_server.cpp	/^  ros::Publisher navTarget_pub; $/;"	m	class:HeadAngle_Manager	file:
+nav_target	gaze_service/src/getheadangle_server.cpp	/^  std::vector<double> nav_target; $/;"	m	class:HeadAngle_Manager	file:
+nearestCell	visual_perception/src/human_belief.cpp	/^bool belief_manager::nearestCell(unsigned int &result, unsigned int start, unsigned char val){$/;"	f	class:belief_manager
+nextfrontier_pose_pub	visual_perception/include/human_belief.h	/^  ros::Publisher nextfrontier_pose_pub;$/;"	m	class:belief_manager
+nh_	gaze_service/src/check_people_server.cpp	/^    ros::NodeHandle nh_;$/;"	m	class:FindPersonManager	file:
+nh_	gaze_service/src/find_people_server.cpp	/^    ros::NodeHandle nh_;$/;"	m	class:FindPersonManager	file:
+nh_	gaze_service/src/gaze_action_server.cpp	/^  ros::NodeHandle nh_;$/;"	m	class:gazeAction	file:
+nh_	gaze_service/src/getheadangle_server.cpp	/^  ros::NodeHandle nh_;$/;"	m	class:HeadAngle_Manager	file:
+nh_	visual_perception/include/human_belief.h	/^  ros::NodeHandle nh_;$/;"	m	class:belief_manager
+nh_	visual_perception/include/visible_region.h	/^  ros::NodeHandle nh_;$/;"	m	class:visible_manager
+nhood4	visual_perception/src/human_belief.cpp	/^std::vector<unsigned int> belief_manager::nhood4(unsigned int idx){$/;"	f	class:belief_manager
+nhood8	visual_perception/src/human_belief.cpp	/^std::vector<unsigned int> belief_manager::nhood8(unsigned int idx){$/;"	f	class:belief_manager
+no_observation_timeout_s	gaze_service/src/ar_gaze_test.cpp	/^static const double no_observation_timeout_s = 0.5;$/;"	v	file:
+num_of_detected_human	visual_perception/include/human_belief.h	/^  int num_of_detected_human;$/;"	m	class:belief_manager
+num_of_detected_human	visual_perception/include/visible_region.h	/^  int num_of_detected_human;$/;"	m	class:visible_manager
+num_of_detected_target	visual_perception/include/human_belief.h	/^  int num_of_detected_target;$/;"	m	class:belief_manager
+num_particles_tracker	visual_perception/src/human_belief.cpp	/^static const unsigned int num_particles_tracker      = 1000;$/;"	v	file:
+num_particles_tracker	visual_perception/src/visible_region.cpp	/^static const unsigned int num_particles_tracker      = 1000;$/;"	v	file:
+object_sub	visual_perception/include/particle_artrack.h	/^    ros::Subscriber object_sub;$/;"	m	class:Particle_person
+octomap_callback	visual_perception/src/octomap_checker.cpp	/^void Octomap_manager::octomap_callback(const octomap_msgs::Octomap::ConstPtr& msg)$/;"	f	class:Octomap_manager
+octomap_sub	visual_perception/include/octomap_checker.h	/^    ros::Subscriber octomap_sub;$/;"	m	class:Octomap_manager
+octree	visual_perception/include/octomap_checker.h	/^    OcTree* octree;$/;"	m	class:Octomap_manager
+one_step_angle	gaze_service/src/getheadangle_server.cpp	34;"	d	file:
+op_people_sub	visual_perception/include/octomap_checker.h	/^    ros::Subscriber op_people_sub;$/;"	m	class:Octomap_manager
+op_people_sub	visual_perception/include/particle_artrack.h	/^    ros::Subscriber op_people_sub;$/;"	m	class:Particle_person
+openpose3d_callback	visual_perception/src/octomap_checker.cpp	/^void Octomap_manager::openpose3d_callback(const openpose_ros_wrapper_msgs::Persons3d::ConstPtr& msg)$/;"	f	class:Octomap_manager
+openpose3d_callback	visual_perception/src/particle_artrack.cpp	/^void Particle_person::openpose3d_callback(const openpose_ros_wrapper_msgs::Persons3d::ConstPtr& msg)$/;"	f	class:Particle_person
+openpose_Callback	gaze_service/src/closest_human_gaze.cpp	/^void openpose_Callback(const geometry_msgs::PoseArray::ConstPtr& msg)$/;"	f	class:closest_human_manager
+openpose_Callback	gaze_service/src/person_tracking_gaze.cpp	/^void openpose_Callback(const geometry_msgs::PoseArray::ConstPtr& msg)$/;"	f	class:gaze_tracking
+openpose_callback	gaze_service/src/check_people_server.cpp	/^    void openpose_callback(const geometry_msgs::PoseArray::ConstPtr &msg) {$/;"	f	class:FindPersonManager
+openpose_callback	gaze_service/src/find_people_server.cpp	/^    void openpose_callback(const geometry_msgs::PoseArray::ConstPtr &msg) {$/;"	f	class:FindPersonManager
+openpose_sub	gaze_service/src/check_people_server.cpp	/^    ros::Subscriber openpose_sub;$/;"	m	class:FindPersonManager	file:
+openpose_sub	gaze_service/src/find_people_server.cpp	/^    ros::Subscriber openpose_sub;$/;"	m	class:FindPersonManager	file:
+origin_to_target_point_	gaze_service/src/gazed_fixing_node.cpp	/^  geometry_msgs::Point origin_to_target_point_;$/;"	m	class:GazedPointFixing	file:
+particle_filter_callback	visual_perception/src/particle_artrack.cpp	/^void Particle_person::particle_filter_callback(const std_msgs::Float32MultiArray::ConstPtr& msg)$/;"	f	class:Particle_person
+particle_output_person	visual_perception/include/octomap_checker.h	/^    geometry_msgs::PointStamped particle_output_person;$/;"	m	class:Octomap_manager
+particle_output_person	visual_perception/include/particle_artrack.h	/^    geometry_msgs::PointStamped particle_output_person;$/;"	m	class:Particle_person
+particle_person_pub	visual_perception/include/particle_artrack.h	/^    ros::Publisher  particle_person_pub;$/;"	m	class:Particle_person
+particle_result	visual_perception/include/octomap_checker.h	/^    std::vector<double> particle_result;$/;"	m	class:Octomap_manager
+particle_result	visual_perception/include/particle_artrack.h	/^    std::vector<double> particle_result;$/;"	m	class:Particle_person
+pcl_sub	visual_perception/include/particle_artrack.h	/^    ros::Subscriber pcl_sub;$/;"	m	class:Particle_person
+people_boxes_sub	visual_perception/include/octomap_checker.h	/^    ros::Subscriber people_boxes_sub;$/;"	m	class:Octomap_manager
+people_boxes_sub	visual_perception/include/particle_artrack.h	/^    ros::Subscriber people_boxes_sub;$/;"	m	class:Particle_person
+people_boxes_sub	visual_perception/include/people_marker.h	/^    ros::Subscriber people_boxes_sub;$/;"	m	class:PeopleMarker
+people_marker_pub	visual_perception/include/people_marker.h	/^    ros::Publisher  people_marker_pub;$/;"	m	class:PeopleMarker
+people_pose_pub	visual_perception/include/octomap_checker.h	/^    ros::Publisher  people_pose_pub;$/;"	m	class:Octomap_manager
+people_pose_pub	visual_perception/include/particle_artrack.h	/^    ros::Publisher  people_pose_pub;$/;"	m	class:Particle_person
+people_poses_sub	visual_perception/include/human_belief.h	/^  ros::Subscriber people_poses_sub;$/;"	m	class:belief_manager
+people_yolo_sub	visual_perception/include/human_belief.h	/^  ros::Subscriber people_yolo_sub;$/;"	m	class:belief_manager
+people_yolo_sub	visual_perception/include/visible_region.h	/^  ros::Subscriber people_yolo_sub;$/;"	m	class:visible_manager
+point_3d__to_image	visual_perception/src/octomap_checker.cpp	/^void Octomap_manager::point_3d__to_image()$/;"	f	class:Octomap_manager
+point_3d__to_image	visual_perception/src/particle_artrack.cpp	/^void Particle_person::point_3d__to_image()$/;"	f	class:Particle_person
+point_pub	visual_perception/include/octomap_checker.h	/^    ros::Publisher  point_pub;$/;"	m	class:Octomap_manager
+point_pub	visual_perception/include/particle_artrack.h	/^    ros::Publisher  point_pub;$/;"	m	class:Particle_person
+pose_scan_topic	gaze_service/src/ar_gaze_test.cpp	/^static const string pose_scan_topic = "openpose_pose_array";$/;"	v	file:
+potential_scale_	visual_perception/include/human_belief.h	/^  double potential_scale_;$/;"	m	class:belief_manager
+pre_global_pose	gaze_service/src/getheadangle_server.cpp	/^  std::vector<double> pre_global_pose;$/;"	m	class:HeadAngle_Manager	file:
+pre_global_pose	visual_perception/include/octomap_checker.h	/^	std::vector<double> pre_global_pose;$/;"	m	class:Octomap_manager
+pre_global_pose	visual_perception/include/particle_artrack.h	/^	std::vector<double> pre_global_pose;$/;"	m	class:Particle_person
+preemptCB	gaze_service/src/gaze_action_server.cpp	/^  void preemptCB()$/;"	f	class:gazeAction
+preemptCB	gaze_service/src/getheadangle_server.cpp	/^  void preemptCB()$/;"	f	class:HeadAngle_Manager
+pub	gaze_service/scripts/moving_human_marker.py	/^pub = rospy.Publisher('\/Int_cmd_trackhuman', Int8, queue_size=10)$/;"	v
+pub	gaze_service/scripts/single_gaze_target.py	/^pub = rospy.Publisher('\/Int_cmd_trackhuman', Int8, queue_size=10)$/;"	v
+publish_cameraregion	visual_perception/src/human_belief.cpp	/^void belief_manager::publish_cameraregion()$/;"	f	class:belief_manager
+publish_cameraregion	visual_perception/src/visible_region.cpp	/^void visible_manager::publish_cameraregion()$/;"	f	class:visible_manager
+publish_gaze_for_target	gaze_service/src/person_tracking_gaze.cpp	/^void publish_gaze_for_target()$/;"	f	class:gaze_tracking
+publish_gaze_to_closest_person	gaze_service/src/closest_human_gaze.cpp	/^void publish_gaze_to_closest_person()$/;"	f	class:closest_human_manager
+publish_head	gaze_service/scripts/head_joint_control	/^    def publish_head(self,pan,tilt):$/;"	m	class:Gaze_controller
+publish_human_candidates	visual_perception/src/human_belief.cpp	/^void belief_manager::publish_human_candidates(){$/;"	f	class:belief_manager
+publish_poses	visual_perception/src/octomap_checker.cpp	/^void Octomap_manager:: publish_poses(std::vector<geometry_msgs::Pose> input_poses){$/;"	f	class:Octomap_manager
+publish_poses	visual_perception/src/particle_artrack.cpp	/^void Particle_person:: publish_poses(std::vector<geometry_msgs::Pose> input_poses){$/;"	f	class:Particle_person
+publish_searchmap	visual_perception/src/human_belief.cpp	/^void belief_manager::publish_searchmap()$/;"	f	class:belief_manager
+publish_target_belief	visual_perception/src/human_belief.cpp	/^void belief_manager::publish_target_belief()$/;"	f	class:belief_manager
+publisher	gaze_service/scripts/moving_human_marker.py	/^publisher = rospy.Publisher(topic, Marker,queue_size=10)$/;"	v
+publisher	gaze_service/scripts/single_gaze_target.py	/^publisher = rospy.Publisher(topic, Marker,queue_size=10)$/;"	v
+res	gaze_service/scripts/findperson_action_client.py	/^    res=find_manager.sendactiongoal()$/;"	v
+reset_search_map	visual_perception/src/human_belief.cpp	/^void belief_manager::reset_search_map()$/;"	f	class:belief_manager
+result_	gaze_service/src/check_people_server.cpp	/^    gaze_service::FindPersonResult result_;$/;"	m	class:FindPersonManager	file:
+result_	gaze_service/src/find_people_server.cpp	/^    gaze_service::FindPersonResult result_;$/;"	m	class:FindPersonManager	file:
+result_	gaze_service/src/gaze_action_server.cpp	/^  gaze_service::GazingResult result_;$/;"	m	class:gazeAction	file:
+result_	gaze_service/src/getheadangle_server.cpp	/^  gaze_service::GetHeadAngleResult result_;$/;"	m	class:HeadAngle_Manager	file:
+result_	visual_perception/include/human_belief.h	/^  visual_perception::SearchResult result_;$/;"	m	class:belief_manager
+robot_state_	visual_perception/include/human_belief.h	/^  tf::TransformListener     robot_state_;$/;"	m	class:belief_manager
+robot_state_	visual_perception/include/visible_region.h	/^  tf::TransformListener     robot_state_;$/;"	m	class:visible_manager
+scaled_dynamic_map_callback	visual_perception/src/human_belief.cpp	/^void belief_manager::scaled_dynamic_map_callback(const nav_msgs::OccupancyGrid::ConstPtr& msg)$/;"	f	class:belief_manager
+scaled_static_map_callback	visual_perception/src/human_belief.cpp	/^void belief_manager::scaled_static_map_callback(const nav_msgs::OccupancyGrid::ConstPtr& msg)$/;"	f	class:belief_manager
+scaled_static_map_callback	visual_perception/src/visible_region.cpp	/^void visible_manager::scaled_static_map_callback(const nav_msgs::OccupancyGrid::ConstPtr& msg)$/;"	f	class:visible_manager
+searchFrom	visual_perception/src/human_belief.cpp	/^std::vector<frontier_exploration::Frontier> belief_manager::searchFrom(geometry_msgs::Point position)$/;"	f	class:belief_manager
+searchmap_pub	visual_perception/include/human_belief.h	/^  ros::Publisher searchmap_pub;$/;"	m	class:belief_manager
+seeTarget	gaze_service/src/gaze_service_node.cpp	/^bool gaze_srv::seeTarget(gaze_service::gaze_target::Request &req, gaze_service::gaze_target::Response &res)$/;"	f	class:gaze_srv
+sendactiongoal	gaze_service/scripts/armarker_test.py	/^    def sendactiongoal(self,desired_x_map, desired_y_map):$/;"	m	class:Gaze_manager
+sendactiongoal	gaze_service/scripts/findperson_action_client.py	/^    def sendactiongoal(self):$/;"	m	class:Find_person_manager
+sendactiongoal	gaze_service/scripts/gaze_action_client.py	/^    def sendactiongoal(self,desired_x_map, desired_y_map):$/;"	m	class:Gaze_manager
+sequencer_delay	visual_perception/src/human_belief.cpp	/^static const double       sequencer_delay            = 0.5; \/\/TODO: this is probably too big, it was 0.8$/;"	v	file:
+sequencer_delay	visual_perception/src/visible_region.cpp	/^static const double       sequencer_delay            = 0.5; \/\/TODO: this is probably too big, it was 0.8$/;"	v	file:
+sequencer_internal_buffer	visual_perception/src/human_belief.cpp	/^static const unsigned int sequencer_internal_buffer  = 100;$/;"	v	file:
+sequencer_internal_buffer	visual_perception/src/visible_region.cpp	/^static const unsigned int sequencer_internal_buffer  = 100;$/;"	v	file:
+sequencer_subscribe_buffer	visual_perception/src/human_belief.cpp	/^static const unsigned int sequencer_subscribe_buffer = 10;$/;"	v	file:
+sequencer_subscribe_buffer	visual_perception/src/visible_region.cpp	/^static const unsigned int sequencer_subscribe_buffer = 10;$/;"	v	file:
+setNavTarget_pub	gaze_service/include/gaze_service_node.h	/^	ros::Publisher setNavTarget_pub;$/;"	m	class:gaze_srv
+setNavTarget_pub	gaze_service/src/clicked_gaze_test.cpp	/^  ros::Publisher setNavTarget_pub;$/;"	m	class:click_gaze_manager	file:
+setNavTarget_pub	gaze_service/src/closest_human_gaze.cpp	/^  ros::Publisher setNavTarget_pub;$/;"	m	class:closest_human_manager	file:
+setNavTarget_pub	gaze_service/src/person_tracking_gaze.cpp	/^  ros::Publisher setNavTarget_pub;$/;"	m	class:gaze_tracking	file:
+setViewpointTarget	gaze_service/src/check_people_server.cpp	/^    void setViewpointTarget(int flag) {$/;"	f	class:FindPersonManager
+setViewpointTarget	gaze_service/src/find_people_server.cpp	/^    void setViewpointTarget(int flag) {$/;"	f	class:FindPersonManager
+setViewpointTarget	gaze_service/src/gaze_action_server.cpp	/^  void setViewpointTarget(const float x_map, float y_map)$/;"	f	class:gazeAction
+setViewpointTarget	gaze_service/src/gaze_service_node.cpp	/^void gaze_srv::setViewpointTarget(const float x_map, float y_map)$/;"	f	class:gaze_srv
+sig_handler	gaze_service/src/gaze_service_test.cpp	/^void sig_handler(int sig)$/;"	f
+spin	visual_perception/src/human_belief.cpp	/^void belief_manager::spin()$/;"	f	class:belief_manager
+spin	visual_perception/src/visible_region.cpp	/^void visible_manager::spin()$/;"	f	class:visible_manager
+startup_time	visual_perception/include/octomap_checker.h	/^    double startup_time;$/;"	m	class:Octomap_manager
+startup_time	visual_perception/include/particle_artrack.h	/^    double startup_time;$/;"	m	class:Particle_person
+startup_time	visual_perception/include/people_marker.h	/^    double startup_time;$/;"	m	class:PeopleMarker
+startup_time_str	visual_perception/include/octomap_checker.h	/^    std::string startup_time_str;$/;"	m	class:Octomap_manager
+startup_time_str	visual_perception/include/particle_artrack.h	/^    std::string startup_time_str;$/;"	m	class:Particle_person
+startup_time_str	visual_perception/include/people_marker.h	/^    std::string startup_time_str;$/;"	m	class:PeopleMarker
+states_cb	gaze_service/scripts/head_joint_control	/^    def states_cb(self,msg):$/;"	m	class:Gaze_controller
+sub_	gaze_service/src/check_people_server.cpp	/^    ros::Subscriber sub_;$/;"	m	class:FindPersonManager	file:
+sub_	gaze_service/src/find_people_server.cpp	/^    ros::Subscriber sub_;$/;"	m	class:FindPersonManager	file:
+sub_	gaze_service/src/gaze_action_server.cpp	/^  ros::Subscriber sub_;$/;"	m	class:gazeAction	file:
+sum_	gaze_service/src/check_people_server.cpp	/^    float sum_, sum_sq_;$/;"	m	class:FindPersonManager	file:
+sum_	gaze_service/src/find_people_server.cpp	/^    float sum_, sum_sq_;$/;"	m	class:FindPersonManager	file:
+sum_	gaze_service/src/gaze_action_server.cpp	/^  float sum_, sum_sq_;$/;"	m	class:gazeAction	file:
+sum_sq_	gaze_service/src/check_people_server.cpp	/^    float sum_, sum_sq_;$/;"	m	class:FindPersonManager	file:
+sum_sq_	gaze_service/src/find_people_server.cpp	/^    float sum_, sum_sq_;$/;"	m	class:FindPersonManager	file:
+sum_sq_	gaze_service/src/gaze_action_server.cpp	/^  float sum_, sum_sq_;$/;"	m	class:gazeAction	file:
+target_callback	gaze_service/src/person_tracking_gaze.cpp	/^void target_callback(const visualization_msgs::Marker::ConstPtr& msg){$/;"	f	class:gaze_tracking
+target_frame	visual_perception/include/octomap_checker.h	/^    std::string target_frame;$/;"	m	class:Octomap_manager
+target_frame	visual_perception/include/particle_artrack.h	/^    std::string target_frame;$/;"	m	class:Particle_person
+target_frame	visual_perception/include/people_marker.h	/^    std::string target_frame;$/;"	m	class:PeopleMarker
+target_point_sub_	gaze_service/src/gazed_fixing_node.cpp	/^  ros::Subscriber target_point_sub_;$/;"	m	class:GazedPointFixing	file:
+target_pose	gaze_service/src/person_tracking_gaze.cpp	/^  std::vector<double> target_pose;$/;"	m	class:gaze_tracking	file:
+target_poses_callback	visual_perception/src/human_belief.cpp	/^void belief_manager::target_poses_callback(const geometry_msgs::PoseArray::ConstPtr& msg)$/;"	f	class:belief_manager
+target_poses_sub	visual_perception/include/human_belief.h	/^  ros::Subscriber target_poses_sub;$/;"	m	class:belief_manager
+targetpose_callback	gaze_service/src/getheadangle_server.cpp	/^void targetpose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg){$/;"	f	class:HeadAngle_Manager
+temp_human_target	gaze_service/src/getheadangle_server.cpp	/^  std::vector<double> temp_human_target; $/;"	m	class:HeadAngle_Manager	file:
+tf_buffer_	gaze_service/src/gazed_fixing_node.cpp	/^  tf2_ros::Buffer tf_buffer_;$/;"	m	class:GazedPointFixing	file:
+time_begin_tofind	gaze_service/src/check_people_server.cpp	/^    double time_begin_tofind;$/;"	m	class:FindPersonManager	file:
+time_begin_tofind	gaze_service/src/find_people_server.cpp	/^    double time_begin_tofind;$/;"	m	class:FindPersonManager	file:
+time_found_human	gaze_service/src/getheadangle_server.cpp	/^  double time_found_human;$/;"	m	class:HeadAngle_Manager	file:
+time_gaze_published	gaze_service/src/getheadangle_server.cpp	/^  double time_gaze_published;$/;"	m	class:HeadAngle_Manager	file:
+topic	gaze_service/scripts/moving_human_marker.py	/^topic = 'human_target'$/;"	v
+topic	gaze_service/scripts/single_gaze_target.py	/^topic = 'gaze_target'$/;"	v
+topic_array	gaze_service/scripts/moving_human_marker.py	/^topic_array = 'human_boxes'$/;"	v
+topic_array	gaze_service/scripts/single_gaze_target.py	/^topic_array = 'human_boxes'$/;"	v
+tracker_init_dist	visual_perception/src/human_belief.cpp	/^static const double       tracker_init_dist          = 4.0;$/;"	v	file:
+tracker_init_dist	visual_perception/src/visible_region.cpp	/^static const double       tracker_init_dist          = 4.0;$/;"	v	file:
+update_human_occ_belief	visual_perception/src/human_belief.cpp	/^void belief_manager::update_human_occ_belief(int update_type){$/;"	f	class:belief_manager
+use_filter	gaze_service/src/ar_gaze_test.cpp	/^static bool use_filter = true;$/;"	v	file:
+visible_manager	visual_perception/include/visible_region.h	/^class visible_manager$/;"	c
+visible_manager	visual_perception/src/visible_region.cpp	/^visible_manager::visible_manager(ros::NodeHandle nh)$/;"	f	class:visible_manager
+visiblie_idx_set	visual_perception/include/human_belief.h	/^  std::vector<int> visiblie_idx_set;$/;"	m	class:belief_manager
+visiblie_idx_set	visual_perception/include/visible_region.h	/^  std::vector<int> visiblie_idx_set;$/;"	m	class:visible_manager
+visualizeFrontiers	visual_perception/src/human_belief.cpp	/^void belief_manager::visualizeFrontiers(const std::vector<frontier_exploration::Frontier>& frontiers)$/;"	f	class:belief_manager
+~HeadAngle_Manager	gaze_service/src/getheadangle_server.cpp	/^  ~HeadAngle_Manager(){}$/;"	f	class:HeadAngle_Manager
+~Octomap_manager	visual_perception/src/octomap_checker.cpp	/^Octomap_manager::~Octomap_manager()$/;"	f	class:Octomap_manager
+~ar_tracker	gaze_service/src/ar_gaze_test.cpp	/^  ~ar_tracker(){}$/;"	f	class:ar_tracker
+~belief_manager	visual_perception/src/human_belief.cpp	/^belief_manager::~belief_manager()$/;"	f	class:belief_manager
+~click_gaze_manager	gaze_service/src/clicked_gaze_test.cpp	/^  ~click_gaze_manager(){}$/;"	f	class:click_gaze_manager
+~closest_human_manager	gaze_service/src/closest_human_gaze.cpp	/^  ~closest_human_manager(){}$/;"	f	class:closest_human_manager
+~gazeAction	gaze_service/src/gaze_action_server.cpp	/^  ~gazeAction(void)$/;"	f	class:gazeAction
+~gaze_srv	gaze_service/src/gaze_service_node.cpp	/^gaze_srv::~gaze_srv(){}$/;"	f	class:gaze_srv
+~gaze_tracking	gaze_service/src/person_tracking_gaze.cpp	/^  ~gaze_tracking(){}$/;"	f	class:gaze_tracking
+~visible_manager	visual_perception/src/visible_region.cpp	/^visible_manager::~visible_manager()$/;"	f	class:visible_manager

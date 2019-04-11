@@ -115,6 +115,8 @@ public:
   std::vector<frontier_exploration::Frontier> searchFrom(geometry_msgs::Point position);
   unsigned char* getCharMap() const; 
   void visualizeFrontiers(const std::vector<frontier_exploration::Frontier>& frontiers);
+  void getNextFrontiers(const std::vector<frontier_exploration::Frontier>& frontiers);
+  void reset_search_map();
 
 private:
 
@@ -130,6 +132,8 @@ private:
   ros::Publisher searchmap_pub;
   ros::Publisher human_candidates_pub;
   ros::Publisher frontier_marker_pub;
+  ros::Publisher nextfrontier_pose_pub;
+  ros::Publisher frontier_cloud_pub;
 
   ros::Subscriber people_yolo_sub;
   ros::Subscriber people_poses_sub;
@@ -181,6 +185,8 @@ private:
   double blacklist_radius_;
   double map_res;
   int last_markers_count_;
+  bool isTargetDetected;
+  bool isActionActive;
 
 }; // class
 
