@@ -22,6 +22,12 @@
 #include <nav_msgs/OccupancyGrid.h>
 #include <move_base_msgs/MoveBaseActionGoal.h>
 
+#include <visualization_msgs/Marker.h>
+#include <visualization_msgs/MarkerArray.h>
+#include <pcl_ros/point_cloud.h>
+#include <pcl/point_cloud.h>
+#include <pcl/point_types.h>
+
 #include <visual_perception/SearchAction.h>
 #include <visual_perception/SearchResult.h>
 #include <visual_perception/SearchFeedback.h>
@@ -102,12 +108,13 @@ public:
 
   frontier_exploration::Frontier buildNewFrontier(unsigned int initial_cell, unsigned int reference, std::vector<bool>& frontier_flag);
   bool isNewFrontierCell(unsigned int idx, const std::vector<bool>& frontier_flag);
+  double frontierCost(const frontier_exploration::Frontier& frontier);
   bool nearestCell(unsigned int &result, unsigned int start, unsigned char val);
   std::vector<unsigned int> nhood8(unsigned int idx);
   std::vector<unsigned int> nhood4(unsigned int idx);
-  void searchFrom(geometry_msgs::Point position);
+  std::vector<frontier_exploration::Frontier> searchFrom(geometry_msgs::Point position);
   unsigned char* getCharMap() const; 
-
+  void visualizeFrontiers(const std::vector<frontier_exploration::Frontier>& frontiers);
 
 private:
 
@@ -122,6 +129,7 @@ private:
   ros::Publisher belief_pub;
   ros::Publisher searchmap_pub;
   ros::Publisher human_candidates_pub;
+  ros::Publisher frontier_marker_pub;
 
   ros::Subscriber people_yolo_sub;
   ros::Subscriber people_poses_sub;
@@ -165,8 +173,14 @@ private:
   
   std::vector<int> index_of_target_occ_cells_updated_recently;
   std::map<int, float> map_index_of_target_cells_to_prob;
+  
 
   //costmap
+  double potential_scale_;
+  double gain_scale_;
+  double blacklist_radius_;
+  double map_res;
+  int last_markers_count_;
 
 }; // class
 

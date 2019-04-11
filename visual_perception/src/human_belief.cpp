@@ -21,7 +21,7 @@ bool IsNotInitilized = true;
 // constructor
 belief_manager::belief_manager(std::string name)
   :as_(nh_, name, boost::bind(&belief_manager::executeCB, this,_1), false),
-   action_name_(name),costmap_(NULL),min_frontier_size_(5),
+   action_name_(name),costmap_(NULL),min_frontier_size_(1),potential_scale_(1e-3), gain_scale_(1.0),blacklist_radius_(0.2),map_res(0.5),
    robot_state_()
 {
   // initialize
@@ -72,9 +72,10 @@ belief_manager::belief_manager(std::string name)
 
 
   //Initialize costmap variable
-  //
+  last_markers_count_=0;
   costmap_size_x=Target_Search_map.info.width;
   costmap_size_y=Target_Search_map.info.height;
+  map_res = Target_Search_map.info.resolution;
   costmap_ = new unsigned char[search_size];
   memset(costmap_,NO_INFORMATION, search_size * sizeof(unsigned char));
 
@@ -82,6 +83,7 @@ belief_manager::belief_manager(std::string name)
   human_candidates_pub=nh_.advertise<geometry_msgs::PoseArray>("/human_belief_pose_array", 10, true);
   belief_pub=nh_.advertise<nav_msgs::OccupancyGrid>("/human_belief_map", 10, true);
   searchmap_pub=nh_.advertise<nav_msgs::OccupancyGrid>("/target_search_map", 10, true);
+  frontier_marker_pub = nh_.advertise<visualization_msgs::MarkerArray>("frontier_list_search", 5);
 
   joint_state_sub =nh_.subscribe<sensor_msgs::JointState>("/hsrb/joint_states", 10, &belief_manager::joint_states_callback,this);
   target_poses_sub =nh_.subscribe<geometry_msgs::PoseArray>("/bottle_poses", 10, &belief_manager::target_poses_callback,this);
@@ -104,8 +106,6 @@ void belief_manager::joint_states_callback(const sensor_msgs::JointState::ConstP
     //ROS_INFO("joint states callback");
   Head_Pos[0]=msg->position[9];     //pan
   Head_Pos[1]=msg->position[10];      //tilt
- 
-
 }
 
 
@@ -708,7 +708,7 @@ unsigned char* belief_manager::getCharMap() const
     return costmap_;
 }
 
-void belief_manager::searchFrom(geometry_msgs::Point position)
+std::vector<frontier_exploration::Frontier> belief_manager::searchFrom(geometry_msgs::Point position)
 {
 
     std::vector<frontier_exploration::Frontier> frontier_list;
@@ -767,6 +767,12 @@ void belief_manager::searchFrom(geometry_msgs::Point position)
         }
     }
 
+    for(auto& frontier : frontier_list) {
+        frontier.cost = frontierCost(frontier);
+    }
+    std::sort(frontier_list.begin(), frontier_list.end(),[](const frontier_exploration::Frontier& f1, const frontier_exploration::Frontier& f2) { return f1.cost < f2.cost; });
+    return frontier_list;
+
 }
 
 bool belief_manager::isNewFrontierCell(unsigned int idx, const std::vector<bool>& frontier_flag){
@@ -787,34 +793,46 @@ bool belief_manager::isNewFrontierCell(unsigned int idx, const std::vector<bool>
     return false;
 }
 
-frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int initial_cell, unsigned int reference, std::vector<bool>& frontier_flag){
+double belief_manager::frontierCost(const frontier_exploration::Frontier& frontier)
+{
+  return (potential_scale_ * frontier.min_distance *map_res) -
+         (gain_scale_ * frontier.size * map_res);
+}
+
+
+frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int initial_cell, unsigned int reference_, std::vector<bool>& frontier_flag){
 
     //initialize frontier structure
     frontier_exploration::Frontier output;
     //geometry_msgs::Point centroid, middle;
     
-/*
-    centroid.x = 0;
-    centroid.y = 0;
-    //output.size = 1;
-    //output.min_distance = std::numeric_limits<double>::infinity();
+
+    output.centroid.x = 0;
+    output.centroid.y = 0;
+    output.size = 1;
+    output.min_distance = std::numeric_limits<double>::infinity();
 
     //record initial contact point for frontier
-    unsigned int ix, iy;
-    //get map index
-    costmap_.indexToCells(initial_cell,ix,iy);
     //get glboal coordinate from map coordinate
-    costmap_.mapToWorld(ix,iy,output.travel_point.x,output.travel_point.y);
+    std::vector<double> temp_pose(2,0.0);
+    Mapidx2GlobalCoord(initial_cell,temp_pose);
+    output.travel_point.x=temp_pose[0];
+    output.travel_point.y=temp_pose[1];
 
     //push initial gridcell onto queue
     std::queue<unsigned int> bfs;
     bfs.push(initial_cell);
 
     //cache reference position in world coords
-    unsigned int rx,ry;
-    double reference_x, reference_y;
-    costmap_.indexToCells(reference,rx,ry);
-    costmap_.mapToWorld(rx,ry,reference_x,reference_y);
+    //unsigned int rx,ry;
+    //double reference_x, reference_y;
+    //costmap_.indexToCells(reference,rx,ry);
+    //costmap_.mapToWorld(rx,ry,reference_x,reference_y);
+
+    std::vector<double> temp_referencepose(2,0.0);
+    Mapidx2GlobalCoord(reference_,temp_referencepose);
+    double reference_x=temp_referencepose[0];
+    double reference_y=temp_referencepose[1];
 
     while(!bfs.empty()){
         unsigned int idx = bfs.front();
@@ -827,10 +845,14 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
 
                 //mark cell as frontier
                 frontier_flag[nbr] = true;
-                unsigned int mx,my;
-                double wx,wy;
-                costmap_.indexToCells(nbr,mx,my);
-                costmap_.mapToWorld(mx,my,wx,wy);
+                std::vector<double> temp_position(2,0.0);
+                Mapidx2GlobalCoord(nbr,temp_referencepose);
+                double wx = temp_position[0];
+                double wy = temp_position[1];
+                //unsigned int mx,my;
+                //double wx,wy;
+                //costmap_.indexToCells(nbr,mx,my);
+                //costmap_.mapToWorld(mx,my,wx,wy);
 
                 geometry_msgs::Point point;
                 point.x = wx;
@@ -864,25 +886,105 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
     output.centroid.x+=-0.3;
     output.centroid.y+=-0.3;
 
-    if(travel_point_ == "closest"){
-        // point already set
-    }else if(travel_point_ == "middle"){
-        output.travel_point = output.middle;
-    }else if(travel_point_ == "centroid"){
-        output.travel_point = output.centroid;
-    }else{
-        ROS_ERROR("Invalid 'frontier_travel_point' parameter, falling back to 'closest'");
-        // point already set
-    }
+    output.travel_point = output.middle;
 
-    */
+    //if(travel_point_ == "closest"){
+         //point already set
+    //}else if(travel_point_ == "middle"){
+        //output.travel_point = output.middle;
+    //}else if(travel_point_ == "centroid"){
+        //output.travel_point = output.centroid;
+    //}else{
+        //ROS_ERROR("Invalid 'frontier_travel_point' parameter, falling back to 'closest'");
+         //point already set
+    //}
+
     return output;
 }
 
+void belief_manager::visualizeFrontiers(const std::vector<frontier_exploration::Frontier>& frontiers)
+{
+        std_msgs::ColorRGBA blue;
+        blue.r = 0;
+        blue.g = 0;
+        blue.b = 1.0;
+        blue.a = 1.0;
+        std_msgs::ColorRGBA red;
+        red.r = 1.0;
+        red.g = 0;
+        red.b = 0;
+        red.a = 1.0;
+        std_msgs::ColorRGBA green;
+        green.r = 0;
+        green.g = 1.0;
+        green.b = 0;
+        green.a = 1.0;
 
+        ROS_DEBUG("visualising %lu frontiers", frontiers.size());
+        visualization_msgs::MarkerArray markers_msg;
+        std::vector<visualization_msgs::Marker>& markers = markers_msg.markers;
+        visualization_msgs::Marker m;
 
+        m.header.frame_id ="map";
+        m.header.stamp = ros::Time::now();
+        m.ns = "frontiers";
+        m.scale.x = 1.0;
+        m.scale.y = 1.0;
+        m.scale.z = 1.0;
+        m.color.r = 0;
+        m.color.g = 0;
+        m.color.b = 255;
+        m.color.a = 255;
+        // lives forever
+        m.lifetime = ros::Duration(0);
+        m.frame_locked = true;
 
+        // weighted frontiers are always sorted
+        double min_cost = frontiers.empty() ? 0. : frontiers.front().cost;
+        m.action = visualization_msgs::Marker::ADD;
+        size_t id = 0;
+        for (auto& frontier : frontiers) {
+            m.type = visualization_msgs::Marker::POINTS;
+            m.id = int(id);
+            m.pose.position = {};
+            m.scale.x = 0.1;
+            m.scale.y = 0.1;
+            m.scale.z = 0.1;
+            m.points = frontier.points;
+            m.color=red;
+            //if (goalOnBlacklist(frontier.centroid)) {
+                //m.color = red;
+            //} else {
+                //m.color = blue;
+            //}
+            markers.push_back(m);
+            ++id;
+            m.type = visualization_msgs::Marker::SPHERE;
+            m.id = int(id);
+            m.pose.position = frontier.initial;
+            // scale frontier according to its cost (costier frontiers will be smaller)
+            double scale = std::min(std::abs(min_cost * 0.4 / frontier.cost), 0.5);
+            m.scale.x = scale;
+            m.scale.y = scale;
+            m.scale.z = scale;
+            m.points = {};
+            m.color = green;
+            markers.push_back(m);
+            ++id;
+        }
+        size_t current_markers_count = markers.size();
 
+        // delete previous markers, which are now unused
+        m.action = visualization_msgs::Marker::DELETE;
+        for (; id < last_markers_count_; ++id) {
+            m.id = int(id);
+            markers.push_back(m);
+        }
+
+        last_markers_count_ = current_markers_count;
+        //marker_array_publisher_.publish(markers_msg);
+        frontier_marker_pub.publish(markers_msg);
+    }
 
 
 
