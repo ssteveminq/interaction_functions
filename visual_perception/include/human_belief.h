@@ -28,10 +28,13 @@
 //#include <visualization_msgs/Marker.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
+#include <frontier_exploration/Frontier.h>
+#include <boost/foreach.hpp>
 
 // log files
 #include <fstream>
 #include <vector>
+#include <queue>
 
 #define FOVW 36       //field of view width
 #define MATH_PI 3.14159265359
@@ -93,7 +96,18 @@ public:
   void spin();
 
   void executeCB(const visual_perception::SearchGoalConstPtr &goal);
+
+  //costmap
   void Extract_frontier();
+
+  frontier_exploration::Frontier buildNewFrontier(unsigned int initial_cell, unsigned int reference, std::vector<bool>& frontier_flag);
+  bool isNewFrontierCell(unsigned int idx, const std::vector<bool>& frontier_flag);
+  bool nearestCell(unsigned int &result, unsigned int start, unsigned char val);
+  std::vector<unsigned int> nhood8(unsigned int idx);
+  std::vector<unsigned int> nhood4(unsigned int idx);
+  void searchFrom(geometry_msgs::Point position);
+  unsigned char* getCharMap() const; 
+
 
 private:
 
@@ -115,6 +129,11 @@ private:
   ros::Subscriber Scaled_static_map_sub;
   ros::Subscriber joint_state_sub;
   ros::Subscriber target_poses_sub;
+
+  unsigned int min_frontier_size_;
+  unsigned int costmap_size_x;
+  unsigned int costmap_size_y;
+  unsigned char* costmap_;
   
   // tf listener
   tf::TransformListener     robot_state_;
@@ -146,6 +165,8 @@ private:
   
   std::vector<int> index_of_target_occ_cells_updated_recently;
   std::map<int, float> map_index_of_target_cells_to_prob;
+
+  //costmap
 
 }; // class
 

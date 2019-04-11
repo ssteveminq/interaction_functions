@@ -10,13 +10,18 @@ static const unsigned int sequencer_subscribe_buffer = 10;
 static const unsigned int num_particles_tracker      = 1000;
 static const double       tracker_init_dist          = 4.0;
 
+static const unsigned char  FREE_SPACE = 0;
+static const unsigned char  INSCRIBED_INFLATED_OBSTACLE = 253;
+static const unsigned char  LETHAL_OBSTACLE = 254;
+static const unsigned char  NO_INFORMATION = 255;
+
 bool IsNotInitilized = true;
 
 
 // constructor
 belief_manager::belief_manager(std::string name)
   :as_(nh_, name, boost::bind(&belief_manager::executeCB, this,_1), false),
-   action_name_(name),
+   action_name_(name),costmap_(NULL),min_frontier_size_(5),
    robot_state_()
 {
   // initialize
@@ -61,9 +66,17 @@ belief_manager::belief_manager(std::string name)
   Target_Search_map.info.origin.position.x=offset_origin;
   Target_Search_map.info.origin.position.y=offset_origin;
   Target_Search_map.data.resize(Target_Search_map.info.width*Target_Search_map.info.height);
-  for(int k(0);k<belief_size;k++)
-      Target_Search_map.data[k]=0.0;
+  unsigned int search_size=Target_Search_map.info.width*Target_Search_map.info.height;
+  for(int k(0);k<search_size;k++)
+      Target_Search_map.data[k]=-1.0;
 
+
+  //Initialize costmap variable
+  //
+  costmap_size_x=Target_Search_map.info.width;
+  costmap_size_y=Target_Search_map.info.height;
+  costmap_ = new unsigned char[search_size];
+  memset(costmap_,NO_INFORMATION, search_size * sizeof(unsigned char));
 
   camera_visible_region_pub=nh_.advertise<nav_msgs::OccupancyGrid>("/camera_region_map", 10, true);
   human_candidates_pub=nh_.advertise<geometry_msgs::PoseArray>("/human_belief_pose_array", 10, true);
@@ -79,6 +92,8 @@ belief_manager::belief_manager(std::string name)
 // destructor
 belief_manager::~belief_manager()
 {
+    delete []costmap_;
+    costmap_ = NULL;
   // delete sequencer
   // delete all trackers
 };
@@ -577,8 +592,300 @@ void belief_manager::target_poses_callback(const geometry_msgs::PoseArray::Const
 
     //ROS_INFO("updatd--------");
     update_human_occ_belief(HUMANS_DETECTED);
+}
+
+/**
+ * @brief Find nearest cell of a specified value
+ * @param result Index of located cell
+ * @param start Index initial cell to search from
+ * @param val Specified value to search for
+ * @param costmap Reference to map data
+ * @return True if a cell with the requested value was found
+ */
+
+std::vector<unsigned int> belief_manager::nhood4(unsigned int idx){
+    //get 4-connected neighbourhood indexes, check for edge of map
+    std::vector<unsigned int> out;
+
+    //unsigned int search_size =Target_Search_map.info.width*Target_Search_map.info.height;
+    unsigned int size_x_ = costmap_size_x;
+    unsigned int size_y_ = costmap_size_y;
+
+    if (idx > size_x_ * size_y_ -1){
+        ROS_WARN("Evaluating nhood for offmap point");
+        return out;
+    }
+
+    if(idx % size_x_ > 0){
+        out.push_back(idx - 1);
+    }
+    if(idx % size_x_ < size_x_ - 1){
+        out.push_back(idx + 1);
+    }
+    if(idx >= size_x_){
+        out.push_back(idx - size_x_);
+    }
+    if(idx < size_x_*(size_y_-1)){
+        out.push_back(idx + size_x_);
+    }
+    return out;
 
 }
+
+std::vector<unsigned int> belief_manager::nhood8(unsigned int idx){
+    //get 8-connected neighbourhood indexes, check for edge of map
+    std::vector<unsigned int> out = nhood4(idx);
+
+    unsigned int size_x_ = costmap_size_x;
+    unsigned int size_y_ = costmap_size_y;
+
+    if (idx > size_x_ * size_y_ -1){
+        return out;
+    }
+
+    if(idx % size_x_ > 0 && idx >= size_x_){
+        out.push_back(idx - 1 - size_x_);
+    }
+    if(idx % size_x_ > 0 && idx < size_x_*(size_y_-1)){
+        out.push_back(idx - 1 + size_x_);
+    }
+    if(idx % size_x_ < size_x_ - 1 && idx >= size_x_){
+        out.push_back(idx + 1 - size_x_);
+    }
+    if(idx % size_x_ < size_x_ - 1 && idx < size_x_*(size_y_-1)){
+        out.push_back(idx + 1 + size_x_);
+    }
+
+    return out;
+}
+
+
+bool belief_manager::nearestCell(unsigned int &result, unsigned int start, unsigned char val){
+
+    const unsigned char* map_ = getCharMap();
+    //const unsigned int size_x = costmap.getSizeInCellsX(), size_y = costmap.getSizeInCellsY();
+
+    unsigned int search_size =Target_Search_map.info.width*Target_Search_map.info.height;
+
+    if(start >= search_size){
+        return false;
+    }
+
+    //initialize breadth first search
+    std::queue<unsigned int> bfs;
+    std::vector<bool> visited_flag(search_size, false);
+
+    //push initial cell
+    bfs.push(start);
+    visited_flag[start] = true;
+
+    //search for neighbouring cell matching value
+    while(!bfs.empty()){
+        unsigned int idx = bfs.front();
+        bfs.pop();
+
+        //return if cell of correct value is found
+        if(map_[idx] == val){
+            result = idx;
+            return true;
+        }
+
+        //iterate over all adjacent unvisited cells
+        BOOST_FOREACH(unsigned nbr, nhood8(idx)){
+            if(!visited_flag[nbr]){
+                bfs.push(nbr);
+                visited_flag[nbr] = true;
+            }
+        }
+    }
+
+    return false;
+}
+
+
+unsigned char* belief_manager::getCharMap() const
+{
+    return costmap_;
+}
+
+void belief_manager::searchFrom(geometry_msgs::Point position)
+{
+
+    std::vector<frontier_exploration::Frontier> frontier_list;
+
+    //unsigned int mx,my;
+    //if (!costmap_.worldToMap(position.x,position.y,mx,my)){
+        //ROS_ERROR("Robot out of costmap bounds, cannot search for frontiers");
+        //return frontier_list;
+    //}
+    //make sure map is consistent and locked for duration of search
+    //boost::unique_lock < costmap_2d::Costmap2D::mutex_t > lock(*(costmap_.getMutex()));
+
+
+    //Get current occupancy grid
+    //map_ = costmap_.getCharMap();
+    //size_x_ = costmap_.getSizeInCellsX();
+    //size_y_ = costmap_.getSizeInCellsY();
+
+
+    unsigned int target_mapidx=(unsigned int) CoordinateTransform_Global2_beliefMap(global_pose[0], global_pose[1]);
+    unsigned int search_size =Target_Search_map.info.width*Target_Search_map.info.height;
+     //initialize flag arrays to keep track of visited and frontier cells
+    std::vector<bool> frontier_flag(search_size, false);
+    std::vector<bool> visited_flag(search_size, false);
+
+    //initialize breadth first search
+    std::queue<unsigned int> bfs;
+
+    unsigned int clear, pos = target_mapidx;
+    if(nearestCell(clear, pos, FREE_SPACE)){
+        bfs.push(clear);
+    }else{
+        bfs.push(pos);
+        ROS_WARN("Could not find nearby clear cell to start search");
+    }
+    visited_flag[bfs.front()] = true;
+
+    while(!bfs.empty()){
+        unsigned int idx = bfs.front();
+        bfs.pop();
+
+        //iterate over 4-connected neighbourhood
+        BOOST_FOREACH(unsigned nbr, nhood4(idx)){
+            //add to queue all free, unvisited cells, use descending search in case initialized on non-free cell
+            if(costmap_[nbr] <= costmap_[idx] && !visited_flag[nbr]){
+                visited_flag[nbr] = true;
+                bfs.push(nbr);
+                //check if cell is new frontier cell (unvisited, NO_INFORMATION, free neighbour)
+            }else if(isNewFrontierCell(nbr, frontier_flag)){
+                frontier_flag[nbr] = true;
+                frontier_exploration::Frontier new_frontier = buildNewFrontier(nbr, pos, frontier_flag);
+                if(new_frontier.size > min_frontier_size_){
+                    frontier_list.push_back(new_frontier);
+                }
+            }
+        }
+    }
+
+}
+
+bool belief_manager::isNewFrontierCell(unsigned int idx, const std::vector<bool>& frontier_flag){
+
+    //map_ = costmap_.getCharMap();
+    //check that cell is unknown and not already marked as frontier
+    if(costmap_[idx] != NO_INFORMATION || frontier_flag[idx]){
+        return false;
+    }
+
+    //frontier cells should have at least one cell in 4-connected neighbourhood that is free
+    BOOST_FOREACH(unsigned int nbr, nhood4(idx)){
+        if(costmap_[nbr] == FREE_SPACE){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int initial_cell, unsigned int reference, std::vector<bool>& frontier_flag){
+
+    //initialize frontier structure
+    frontier_exploration::Frontier output;
+    //geometry_msgs::Point centroid, middle;
+    
+/*
+    centroid.x = 0;
+    centroid.y = 0;
+    //output.size = 1;
+    //output.min_distance = std::numeric_limits<double>::infinity();
+
+    //record initial contact point for frontier
+    unsigned int ix, iy;
+    //get map index
+    costmap_.indexToCells(initial_cell,ix,iy);
+    //get glboal coordinate from map coordinate
+    costmap_.mapToWorld(ix,iy,output.travel_point.x,output.travel_point.y);
+
+    //push initial gridcell onto queue
+    std::queue<unsigned int> bfs;
+    bfs.push(initial_cell);
+
+    //cache reference position in world coords
+    unsigned int rx,ry;
+    double reference_x, reference_y;
+    costmap_.indexToCells(reference,rx,ry);
+    costmap_.mapToWorld(rx,ry,reference_x,reference_y);
+
+    while(!bfs.empty()){
+        unsigned int idx = bfs.front();
+        bfs.pop();
+
+        //try adding cells in 8-connected neighborhood to frontier
+        BOOST_FOREACH(unsigned int nbr, nhood8(idx)){
+            //check if neighbour is a potential frontier cell
+            if(isNewFrontierCell(nbr,frontier_flag)){
+
+                //mark cell as frontier
+                frontier_flag[nbr] = true;
+                unsigned int mx,my;
+                double wx,wy;
+                costmap_.indexToCells(nbr,mx,my);
+                costmap_.mapToWorld(mx,my,wx,wy);
+
+                geometry_msgs::Point point;
+                point.x = wx;
+                point.y = wy;
+                output.points.push_back(point);
+                //update frontier size
+                output.size++;
+
+                //update centroid of frontier
+                output.centroid.x += wx;
+                output.centroid.y += wy;
+
+                //determine frontier's distance from robot, going by closest gridcell to robot
+                double distance = sqrt(pow((double(reference_x)-double(wx)),2.0) + pow((double(reference_y)-double(wy)),2.0));
+                if(distance < output.min_distance){
+                    output.min_distance = distance;
+                    output.middle.x = wx;
+                    output.middle.y = wy;
+                }
+
+                //add to queue for breadth first search
+                bfs.push(nbr);
+            }
+        }
+    }
+
+    //average out frontier centroid
+    output.centroid.x /= output.size;
+    output.centroid.y /= output.size;
+    
+    output.centroid.x+=-0.3;
+    output.centroid.y+=-0.3;
+
+    if(travel_point_ == "closest"){
+        // point already set
+    }else if(travel_point_ == "middle"){
+        output.travel_point = output.middle;
+    }else if(travel_point_ == "centroid"){
+        output.travel_point = output.centroid;
+    }else{
+        ROS_ERROR("Invalid 'frontier_travel_point' parameter, falling back to 'closest'");
+        // point already set
+    }
+
+    */
+    return output;
+}
+
+
+
+
+
+
+
+
 
 void belief_manager::human_poses_callback(const geometry_msgs::PoseArray::ConstPtr& msg)
 {
@@ -696,7 +1003,8 @@ void belief_manager::update_human_occ_belief(int update_type){
             map_index_of_target_cells_to_prob.erase(index_to_erase);
             Human_Belief_Scan_map.data[index_to_erase]=0.00;
             Human_Belief_type_map.data[index_to_erase]=0;
-            Target_Search_map.data[index_to_erase]=100;
+            Target_Search_map.data[index_to_erase]=0.0;
+            costmap_[index_to_erase]=FREE_SPACE;
         }
 }
 
@@ -809,9 +1117,6 @@ bool belief_manager::Comparetwopoistions(std::vector<double> pos,std::vector<dou
 
 
 
-
-
-
 // filter loop
 void belief_manager::spin()
 {
@@ -826,6 +1131,8 @@ void belief_manager::spin()
 
     // ------ LOCKED ------
     boost::mutex::scoped_lock lock(filter_mutex_);
+    
+    //searchfrom
     lock.unlock();
     // ------ LOCKED ------
 
