@@ -1,0 +1,8 @@
+#goal definition
+bool start
+---
+#result definition
+bool is_person
+---
+#feedback
+geometry_msgs/PoseStamped human_pose

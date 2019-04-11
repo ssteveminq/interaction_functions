@@ -41,6 +41,7 @@ add_action_files(
    DIRECTORY action 
    FILES Gazing.action
    FindPerson.action
+   GetHeadAngle.action
     )
 
 generate_messages(
@@ -106,7 +107,9 @@ add_executable(find_people_server src/find_people_server.cpp ${SOURCES})
 target_link_libraries(find_people_server ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(find_people_server ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencpp)
 
-
+add_executable(getheadangle_server src/getheadangle_server.cpp ${SOURCES})
+target_link_libraries(getheadangle_server ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(getheadangle_server ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencpp)
 
 add_executable(person_tracking src/person_tracking_gaze.cpp ${SOURCES})
 target_link_libraries(person_tracking ${catkin_LIBRARIES} ${PCL_LIBRARIES})
