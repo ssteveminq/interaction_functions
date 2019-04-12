@@ -1,6 +1,7 @@
 #include <string>
 #include <boost/thread/mutex.hpp>
 
+
 // ros stuff
 #include <ros/ros.h>
 #include <tf/tf.h>
@@ -15,6 +16,7 @@
 #include <message_filters/time_sequencer.h>
 #include <message_filters/subscriber.h>
 #include <geometry_msgs/PoseArray.h>
+#include <geometry_msgs/Twist.h>
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/PointStamped.h>
 #include <geometry_msgs/Point.h>
@@ -41,6 +43,7 @@
 #include <fstream>
 #include <vector>
 #include <queue>
+#include <math.h>
 
 #define FOVW 36       //field of view width
 #define MATH_PI 3.14159265359
@@ -104,8 +107,6 @@ public:
   void executeCB(const visual_perception::SearchGoalConstPtr &goal);
 
   //costmap
-  void Extract_frontier();
-
   frontier_exploration::Frontier buildNewFrontier(unsigned int initial_cell, unsigned int reference, std::vector<bool>& frontier_flag);
   bool isNewFrontierCell(unsigned int idx, const std::vector<bool>& frontier_flag);
   double frontierCost(const frontier_exploration::Frontier& frontier);
@@ -117,6 +118,7 @@ public:
   void visualizeFrontiers(const std::vector<frontier_exploration::Frontier>& frontiers);
   void getNextFrontiers(const std::vector<frontier_exploration::Frontier>& frontiers);
   void reset_search_map();
+  void publish_frontiers();
 
 private:
 
@@ -134,6 +136,9 @@ private:
   ros::Publisher frontier_marker_pub;
   ros::Publisher nextfrontier_pose_pub;
   ros::Publisher frontier_cloud_pub;
+  ros::Publisher left_frontier_pub;
+  ros::Publisher right_frontier_pub;
+  ros::Publisher cmd_velocity_pub;
 
   ros::Subscriber people_yolo_sub;
   ros::Subscriber people_poses_sub;
@@ -180,6 +185,7 @@ private:
   
 
   //costmap
+  double initial_yaw;
   double potential_scale_;
   double gain_scale_;
   double blacklist_radius_;
@@ -187,6 +193,11 @@ private:
   int last_markers_count_;
   bool isTargetDetected;
   bool isActionActive;
+
+  frontier_exploration::Frontier left_frontiers;
+  frontier_exploration::Frontier right_frontiers;
+  geometry_msgs::Point left_average;
+  geometry_msgs::Point right_average;
 
 }; // class
 

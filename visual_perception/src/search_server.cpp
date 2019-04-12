@@ -1,4 +1,4 @@
-#include "human_belief.h"
+#include "search_server.h"
 
 using namespace std;
 using namespace tf;
@@ -84,8 +84,11 @@ belief_manager::belief_manager(std::string name)
   belief_pub=nh_.advertise<nav_msgs::OccupancyGrid>("/human_belief_map", 10, true);
   searchmap_pub=nh_.advertise<nav_msgs::OccupancyGrid>("/target_search_map", 10, true);
   frontier_marker_pub = nh_.advertise<visualization_msgs::MarkerArray>("frontier_list_search", 5);
+  left_frontier_pub = nh_.advertise<geometry_msgs::PointStamped>("left_frontier", 5);
+  right_frontier_pub = nh_.advertise<geometry_msgs::PointStamped>("right_frontier", 5);
   frontier_cloud_pub = nh_.advertise<sensor_msgs::PointCloud2>("frontiers",5);
   nextfrontier_pose_pub= nh_.advertise<geometry_msgs::PoseStamped>("next_frontier",5);
+  cmd_velocity_pub= nh_.advertise<geometry_msgs::Twist>("/hsrb/command_velocity",10, true);
 
   joint_state_sub =nh_.subscribe<sensor_msgs::JointState>("/hsrb/joint_states", 10, &belief_manager::joint_states_callback,this);
   target_poses_sub =nh_.subscribe<geometry_msgs::PoseArray>("/bottle_poses", 10, &belief_manager::target_poses_callback,this);
@@ -109,6 +112,7 @@ void belief_manager::reset_search_map()
     if(costmap_ !=NULL)
         delete []costmap_;
 
+  initial_yaw=global_pose[2]-0.01;
   isTargetDetected=false;
   double offset_origin = -7.5;
   Target_Search_map.info.width=30;
@@ -551,6 +555,7 @@ void belief_manager::global_pose_callback(const geometry_msgs::PoseStamped::Cons
    listener.waitForTransform("map", "base_link", ros::Time(0), ros::Duration(2.0));
    listener.lookupTransform("map", "base_link", ros::Time(0), baselinktransform);
    double yaw_tf =   tf::getYaw(baselinktransform.getRotation()); 
+   //ROS_INFO("yaw_angle: %.2lf", yaw_tf);
 
     global_pose[2]=yaw_tf;
 }
@@ -558,14 +563,16 @@ void belief_manager::global_pose_callback(const geometry_msgs::PoseStamped::Cons
 void belief_manager::target_poses_callback(const geometry_msgs::PoseArray::ConstPtr& msg)
 {
 
-    isTargetDetected=true;
     //ROS_INFO("taget poses callback---");
 
     num_of_detected_target=msg->poses.size();
     index_of_target_occ_cells_updated_recently.clear();
 
-    if(num_of_detected_target>0)
+    if(num_of_detected_target>0){
+    
        cur_target.resize(num_of_detected_target);
+       isTargetDetected=true;
+    }
     else
     {
       update_human_occ_belief(NO_HUMANS_DETECTED);
@@ -775,6 +782,8 @@ std::vector<frontier_exploration::Frontier> belief_manager::searchFrom(geometry_
         }
     }
 
+    ROS_INFO("------frontier_list size : %d", frontier_list.size());
+
     for(auto& frontier : frontier_list) {
         frontier.cost = frontierCost(frontier);
     }
@@ -813,6 +822,17 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
     //initialize frontier structure
     frontier_exploration::Frontier output;
     //geometry_msgs::Point centroid, middle;
+    //reset left & right frontiers
+    left_frontiers.points.clear();
+    right_frontiers.points.clear();
+    left_average.x = 0.0;
+    left_average.y = 0.0;
+    left_average.z = 0.5;
+    right_average.x = 0.0;
+    right_average.y = 0.0;
+    right_average.z = 0.5;
+    size_t left_size=0;
+    size_t right_size=0;
 
     output.centroid.x = 0;
     output.centroid.y = 0;
@@ -842,6 +862,11 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
         //try adding cells in 8-connected neighborhood to frontier
         BOOST_FOREACH(unsigned int nbr, nhood8(idx)){
             //check if neighbour is a potential frontier cell
+            listener.waitForTransform("map","base_link", ros::Time(0), ros::Duration(3.0));
+            geometry_msgs::PointStamped point_in;
+            geometry_msgs::PointStamped point_out;
+            point_in.header.frame_id ="map";
+
             if(isNewFrontierCell(nbr,frontier_flag)){
 
                 //mark cell as frontier
@@ -854,11 +879,30 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
                 //double wx,wy;
                 //costmap_.indexToCells(nbr,mx,my);
                 //costmap_.mapToWorld(mx,my,wx,wy);
-
                 geometry_msgs::Point point;
                 point.x = wx;
                 point.y = wy;
                 output.points.push_back(point);
+
+                //goal->pose.header.frame_id = "map";
+                point_in.header.stamp = ros::Time(0);
+                point_in.point.x=wx;
+                point_in.point.y=wy;
+                listener.transformPoint("base_link", point_in, point_out);
+
+                if(point_out.point.y>0.0){
+                    left_frontiers.points.push_back(point);
+                    left_average.x += wx;
+                    left_average.y += wy;
+                    left_size++;
+                }
+                else{
+                    right_frontiers.points.push_back(point);
+                    right_average.x += wx;
+                    right_average.y += wy;
+                    right_size++;
+                }
+
                 //update frontier size
                 output.size++;
 
@@ -886,6 +930,18 @@ frontier_exploration::Frontier belief_manager::buildNewFrontier(unsigned int ini
     
     output.centroid.x+=0.25;
     output.centroid.y+=0.25;
+
+    if(left_size>0)
+    {
+        left_average.x= static_cast<double>(left_average.x/left_size);
+        left_average.y= static_cast<double>(left_average.y/left_size);
+    }
+    if(right_size>0)
+    {
+        right_average.x= static_cast<double>(right_average.x/right_size);
+        right_average.y= static_cast<double>(right_average.y/right_size);
+    }
+
 
     //output.travel_point = output.centroid;
 
@@ -922,7 +978,9 @@ void belief_manager::getNextFrontiers(const std::vector<frontier_exploration::Fr
         //ROS_INFO("list travel points:  %.3lf, %.3lf", frontier.travel_point.x, frontier.travel_point.y);
         //ROS_INFO("min_distance : %.3lf", frontier.min_distance);
         //check if this frontier is the nearest to robot
-        if (frontier.min_distance < selected.min_distance){
+        //if (frontier.min_distance > 3.0 ){
+        if (frontier.min_distance < selected.min_distance ){
+            
             selected = frontier;
             max_= frontier_cloud_viz.size()-1;
             }
@@ -933,6 +991,10 @@ void belief_manager::getNextFrontiers(const std::vector<frontier_exploration::Fr
         if (std::isinf(selected.min_distance)) {
             ROS_INFO("No valid (non-blacklisted) frontiers found, exploration complete");
             ROS_DEBUG("No valid (non-blacklisted) frontiers found, exploration complete");
+            //isActionActive=false;
+            //result_.success = true;
+            //as_.setSucceeded(result_);
+            return;
     }
 
    //color selected frontier
@@ -954,6 +1016,115 @@ void belief_manager::getNextFrontiers(const std::vector<frontier_exploration::Fr
    next_frontier.pose.position = selected.travel_point;
    //next_frontier.pose.orientation = tf::createQuaternionMsgFromYaw( yawOfVector(start_pose.pose.position, next_frontier.pose.position) );
    nextfrontier_pose_pub.publish(next_frontier);
+}
+
+void belief_manager::publish_frontiers()
+{
+    /*
+    std_msgs::ColorRGBA blue;
+        blue.r = 0;
+        blue.g = 0;
+        blue.b = 1.0;
+        blue.a = 1.0;
+        std_msgs::ColorRGBA red;
+        red.r = 1.0;
+        red.g = 0;
+        red.b = 0;
+        red.a = 1.0;
+        std_msgs::ColorRGBA green;
+        green.r = 0;
+        green.g = 1.0;
+        green.b = 0;
+        green.a = 1.0;
+
+        visualization_msgs::MarkerArray markers_msg;
+        std::vector<visualization_msgs::Marker>& markers = markers_msg.markers;
+        visualization_msgs::Marker m;
+
+        m.header.frame_id ="map";
+        m.header.stamp = ros::Time::now();
+        m.ns = "left_frontiers";
+        m.scale.x = 1.0;
+        m.scale.y = 1.0;
+        m.scale.z = 1.0;
+        m.color.r = 0;
+        m.color.g = 0;
+        m.color.b = 255;
+        m.color.a = 255;
+        // lives forever
+        m.lifetime = ros::Duration(10);
+        m.frame_locked = true;
+        m.action = visualization_msgs::Marker::ADD;
+        // weighted frontiers are always sorted
+        size_t id = 0;
+            m.type = visualization_msgs::Marker::POINTS;
+            m.id = int(id);
+            m.pose.position = {};
+            m.scale.x = 0.2;
+            m.scale.y = 0.2;
+            m.scale.z = 0.2;
+            m.points = left_frontiers.points;
+            m.color=blue;
+            markers.push_back(m);
+            ++id;
+*/
+
+    geometry_msgs::PointStamped left_point, right_point;
+    left_point.header.frame_id = right_point.header.frame_id = "map";
+    left_point.header.stamp= right_point.header.stamp=ros::Time::now();
+    left_point.point = left_average;
+    right_point.point = right_average;
+    left_frontier_pub.publish(left_point);
+    right_frontier_pub.publish(right_point);
+    feedback_.left_frontier = left_point;
+    feedback_.right_frontier = right_point;
+    
+    //set gaze target point as left_point
+    double target_angle =0.0;
+    listener.waitForTransform("map","base_link", ros::Time(0), ros::Duration(2.0));
+    geometry_msgs::PointStamped point_in;
+    geometry_msgs::PointStamped point_out;
+    point_in.header.frame_id ="map";
+    point_in.header.stamp = ros::Time(0);
+    //point_in.point=left_average;
+    //listener.transformPoint("base_link", point_in, point_out);
+
+    if(left_frontiers.points.size()>0){
+
+        point_in.point=left_average;
+        listener.transformPoint("base_link", point_in, point_out);
+
+        target_angle =atan2(point_out.point.y,point_out.point.x);
+        ROS_INFO("target_angle_baselink: %.3lf", target_angle);
+        if(target_angle>MATH_PI)
+            target_angle=target_angle-2*MATH_PI;
+        else if (target_angle < (-1 * MATH_PI))
+            target_angle=target_angle+2*MATH_PI;
+
+        geometry_msgs::Twist vel_cmd;
+        vel_cmd.angular.z = 0.1;
+        cmd_velocity_pub.publish(vel_cmd);
+
+    }
+    else if(right_frontiers.points.size()>0)
+    {
+        point_in.point=right_average;
+        listener.transformPoint("base_link", point_in, point_out);
+        target_angle =atan2(point_out.point.y, point_out.point.x);
+        ROS_INFO("target_angle_baselink: %.3lf", target_angle);
+        if(target_angle>MATH_PI)
+            target_angle=target_angle-2*MATH_PI;
+        else if (target_angle < (-1 * MATH_PI))
+            target_angle=target_angle+2*MATH_PI;
+
+        geometry_msgs::Twist vel_cmd;
+        vel_cmd.angular.z = -0.1;
+        cmd_velocity_pub.publish(vel_cmd);
+    }
+    else
+    {
+        ROS_INFO("There is no target points");
+    }
 
 
 }
@@ -1253,9 +1424,16 @@ void belief_manager::executeCB(const visual_perception::SearchGoalConstPtr &goal
 
      while(ros::ok() && isActionActive&& !as_.isPreemptRequested())
      {
-        //process_target(navtarget_pose[0],navtarget_pose[1],navtarget_pose[2]);
-        //Sending_velcmd();
-        //
+        if(isTargetDetected)
+        {
+            ROS_INFO("target is detected");
+            isTargetDetected=false;
+            isActionActive=false;
+            result_.success = true;
+            as_.setSucceeded(result_);
+            return;
+        }
+
         boost::mutex::scoped_lock lock(filter_mutex_);
         geometry_msgs::Point start_pose;
         start_pose.x=global_pose[0];
@@ -1275,11 +1453,11 @@ void belief_manager::executeCB(const visual_perception::SearchGoalConstPtr &goal
             ROS_INFO("number of frontiers found: %d", frontier_list.size());
             visualizeFrontiers(frontier_list);
             getNextFrontiers(frontier_list);
+            publish_frontiers();
         }
 
         //searchfrom
         lock.unlock();
-
         as_.publishFeedback(feedback_);
     	ros::spinOnce();
         r.sleep();
@@ -1328,14 +1506,12 @@ void belief_manager::spin()
             getNextFrontiers(frontier_list);
         }
     }
-
     //searchfrom
     lock.unlock();
     */
     // ------ LOCKED ------
     // sleep
     ros::Duration(0.5).sleep();
-
     ros::spinOnce();
   }
 };

@@ -92,7 +92,7 @@ add_executable(visible_manager src/visible_region.cpp)
 add_executable(people_marker src/people_marker.cpp)
 add_executable(particle_artrack src/particle_artrack.cpp)
 add_executable(octomap_checker src/octomap_checker.cpp)
-add_executable(human_belief src/human_belief.cpp)
+add_executable(search_server src/search_server.cpp)
 
 
 ## Add cmake target dependencies of the executable/library
@@ -101,7 +101,7 @@ add_dependencies(people_marker ${catkin_EXPORTED_TARGETS})
 
 add_dependencies(particle_artrack ${catkin_EXPORTED_TARGETS})
 add_dependencies(octomap_checker ${catkin_EXPORTED_TARGETS})
-add_dependencies(human_belief ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencpp)
+add_dependencies(search_server ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(visible_manager visual_perception ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${BFL_LIBRARIES})
@@ -112,7 +112,7 @@ target_link_libraries(particle_artrack ${catkin_LIBRARIES} ${Boost_LIBRARIES}
 target_link_libraries(octomap_checker ${catkin_LIBRARIES} ${Boost_LIBRARIES}
                                         ${BFL_LIBRARIES} ${PCL_LIBRARIES})
 
-target_link_libraries(human_belief ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${BFL_LIBRARIES})
+target_link_libraries(search_server ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${BFL_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
