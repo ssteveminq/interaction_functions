@@ -1332,7 +1332,7 @@ void belief_manager::update_human_occ_belief(int update_type){
             map_index_of_target_cells_to_prob.erase(index_to_erase);
             Human_Belief_Scan_map.data[index_to_erase]=0.00;
             Human_Belief_type_map.data[index_to_erase]=0;
-            Target_Search_map.data[index_to_erase]=0.0;
+            Target_Search_map.data[index_to_erase]=70.0;
             costmap_[index_to_erase]=FREE_SPACE;
         }
 }
