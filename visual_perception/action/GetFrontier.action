@@ -1,0 +1,9 @@
+#goal definition
+---
+#result definition
+bool success
+---
+#feedback
+geometry_msgs/PointStamped target
+geometry_msgs/PointStamped left_frontier
+geometry_msgs/PointStamped right_frontier

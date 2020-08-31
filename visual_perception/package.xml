@@ -23,9 +23,6 @@
   <build_depend>message_generation</build_depend>
   <build_depend>actionlib</build_depend>
   <build_depend>visualization_msgs</build_depend>
-  <build_depend>ar_track_alvar_msgs</build_depend>
-  <build_depend>octomap</build_depend>
-  <build_depend>octomap_msgs</build_depend>
   <build_depend>frontier_exploration</build_depend>
 
 
@@ -43,9 +40,6 @@
   <run_depend>message_generation</run_depend>
   <run_depend>message_runtime</run_depend>
   <run_depend>visualization_msgs</run_depend>
-  <run_depend>ar_track_alvar_msgs</run_depend>
-  <run_depend>octomap</run_depend>
-  <run_depend>octomap_msgs</run_depend>
   <run_depend>frontier_exploration</run_depend>
 
 </package>
